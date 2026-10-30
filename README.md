@@ -6,7 +6,7 @@ It doesn't change XP or rank, doesn't unlock paid DLC and doesn't touch the Gala
 
 ## How to Use
 
-Obsidian Trainer comes with [Obsidian](https://github.com/Alomare/ObsidianModManager), in the STARTER PACK folder, switched off. It updates from this repository.
+Obsidian Trainer comes with [Obsidian](https://github.com/Alomare/ObsidianModManager), in the Obsidian Kit folder, switched off. It updates from this repository.
 
 1. Switch on Obsidian Trainer in the Mods tab. [Obsidian API](https://github.com/Alomare/ObsidianAPI), the mod it's built on, turns on with it.
 2. Deploy, then start the game.
