@@ -1,8 +1,8 @@
 # Obsidian Trainer
 
-An in-game window for HELLDIVERS (2015): your character, weapons, stratagems, enemies, missions and the game's numbers. It works with the mouse or the keys, and you can move and resize it.
+An in-game window for HELLDIVERS (2015) that changes your character, weapons, stratagems, enemies, missions and game data. Use it with the mouse or the keys, and move or resize it.
 
-It can't touch your progression: while it's on, missions add nothing to your save, and it only offers the base game and the DLC you own. It doesn't touch the Galactic War either. It's a session mod, so it follows the same multiplayer rules as any other. It has been tested solo and offline, but not yet with a second player.
+Missions add nothing to your save while it's on, and it only offers the base game and the DLC you own. It stays out of the Galactic War. As a session mod, it follows the same multiplayer rules as any other.
 
 ## How to Use
 
@@ -10,9 +10,9 @@ Obsidian Trainer comes with [Obsidian](https://github.com/Alomare/ObsidianModMan
 
 1. Switch on Obsidian Trainer in the Mods tab. [Obsidian API](https://github.com/Alomare/ObsidianAPI), the mod it's built on, turns on with it.
 2. Deploy, then start the game.
-3. Press F6 to open the window. You can change the key in the mod's Keys tab.
+3. Press F6 to open the window. The Keys tab of the mod changes the key.
 
-The Obsidian Trainer page in the app's Wiki has every key and page.
+The Obsidian Trainer page in the Wiki lists every key and page.
 
 ## Releasing
 
