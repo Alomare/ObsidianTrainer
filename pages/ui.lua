@@ -50,7 +50,7 @@ end
 function U.effect_number(page, key, id, opts)
 	local off = opts.off
 	return page:number(U.t(key), {
-		min = opts.min, max = opts.max, step = opts.step, format = opts.format, help = U.help(key),
+		min = opts.min, max = opts.max, step = opts.step, format = opts.format, help = U.help(key), enabled = opts.enabled,
 		get = function()
 			local v = effects.get(id)
 			if v == false then return off end

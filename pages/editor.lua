@@ -93,7 +93,8 @@ local function enemies_list(page)
 	end
 end
 
-local function table_fields(family, name, target)
+-- write(field, value) makes the change, since a stratagem has more to it than one table.
+local function table_fields(family, target, write)
 	return function(page)
 		for _, field in ipairs(catalog.fields(family)) do
 			if edits.table_value(target, field.path) ~= nil or field.opt then
@@ -101,7 +102,7 @@ local function table_fields(family, name, target)
 					min = field.min, max = field.max, step = step_of(field),
 					help = field.meaning and (field.meaning .. ". " .. t("applies_" .. field.apply)) or nil,
 					get = function() return edits.table_value(target, field.path) or 0 end,
-					set = function(v) note(edits.set_table(name, target, field.path, v, { min = field.min, max = field.max, apply = field.apply, new = field.opt })) end,
+					set = function(v) note(write(field, v)) end,
 				})
 			end
 		end
@@ -111,14 +112,17 @@ end
 local function stratagems_list(page)
 	for _, s in ipairs(catalog.stratagems()) do
 		local name = catalog.text(s.name)
-		page:page(name, table_fields("stratagem", name, s))
+		page:page(name, table_fields("stratagem", s, function(field, v) return api.stratagems.edit(s.name, field.path, v) end))
 	end
 end
 
 local function statuses_list(page)
 	local templates = game.global("StatusTemplateSettings")
 	for _, name in ipairs(catalog.status_templates()) do
-		page:page(name, table_fields("status", name, templates[name]))
+		local target = templates[name]
+		page:page(name, table_fields("status", target, function(field, v)
+			return edits.set_table(name, target, field.path, v, { min = field.min, max = field.max, apply = field.apply, new = field.opt, keep = "status:" .. name })
+		end))
 	end
 end
 

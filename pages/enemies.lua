@@ -1,7 +1,7 @@
 -- Enemies: stopping them, getting rid of them, bringing more.
 local U = obsidian.module("pages/ui")
 local api, t = U.api, U.t
-local enemies, catalog, edits = api.enemies, api.catalog, api.edits
+local enemies, catalog = api.enemies, api.catalog
 
 local amount, where = 1, "ahead"
 
@@ -44,11 +44,7 @@ return function(page)
 	U.effect(page, "freeze", "freeze")
 	U.effect(page, "blind", "blind")
 	U.effect(page, "host_owns_enemies", "host_owns_enemies")
-	page:number(t("max_enemies"), {
-		min = 1, max = 64, step = 1, help = U.help("max_enemies"), enabled = U.host_only,
-		get = function() return enemies.max_enemies() or 0 end,
-		set = function(v) edits.set_table(t("max_enemies"), api.game.global("GameSettings"), "MAX_NUM_ALLOWED_ENEMIES", v, { min = 1, max = 64 }) end,
-	})
+	U.effect_number(page, "max_enemies", "enemy_cap", { off = 16, min = 1, max = enemies.MAX_CAP, step = 1, enabled = U.host_only })
 
 	page:header(t("remove"))
 	U.action(page, "kill_all", enemies.kill_all)
