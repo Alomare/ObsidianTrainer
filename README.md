@@ -2,7 +2,7 @@
 
 An in-game window for HELLDIVERS (2015): your character, weapons, stratagems, enemies, missions and the game's numbers. It works with the mouse or the keys, and you can move and resize it.
 
-It can't touch your progression: while it's on, missions add nothing to your save, and it only offers items you've unlocked. It doesn't touch the Galactic War either. It's a session mod, so it follows the same multiplayer rules as any other. It has been tested solo and offline, but not yet with a second player.
+It can't touch your progression: while it's on, missions add nothing to your save, and it only offers the base game and the DLC you own. It doesn't touch the Galactic War either. It's a session mod, so it follows the same multiplayer rules as any other. It has been tested solo and offline, but not yet with a second player.
 
 ## How to Use
 
