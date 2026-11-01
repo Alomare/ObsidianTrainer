@@ -12,6 +12,7 @@ local world = obsidian.module("pages/world")
 local editor = obsidian.module("pages/editor")
 local console = obsidian.module("pages/console")
 local changes = obsidian.module("pages/changes")
+local tuning = obsidian.module("pages/tuning")
 
 -- The title is a function: at boot the game's language isn't known yet.
 local function page(key, build, icon)
@@ -42,10 +43,16 @@ obsidian.on_session(function(on)
 	if on then
 		obsidian.toast(t("session_on"))
 	else
+		tuning.clear()
 		obsidian.toast(t("session_off"), 8)
 	end
 end)
 
+obsidian.on_frame(function() tuning.sync() end)
+
 if obsidian.settings.get("keep_edits") then
 	obsidian.on_frame(function() return changes.load_saved() end)
 end
+
+-- For tests.
+return { tuning = tuning }

@@ -1,5 +1,6 @@
--- Weapons: ammunition, and giving weapons, packs and perks.
+-- Weapons: ammunition, one weapon's stats, and giving weapons, packs and perks.
 local U = obsidian.module("pages/ui")
+local tuning = obsidian.module("pages/tuning")
 local api, t = U.api, U.t
 local gear, catalog = api.gear, api.catalog
 
@@ -27,6 +28,8 @@ return function(page)
 	U.action(page, "refill", gear.refill)
 	U.action(page, "refill_grenades", gear.refill_grenades)
 	U.action(page, "refill_backpack", gear.refill_backpack)
+
+	tuning.rows(page)
 
 	page:header(t("give"))
 	page:choice(t("give_upgrades"), {

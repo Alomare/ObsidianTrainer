@@ -1,6 +1,7 @@
 -- Changes: what's switched on and what's been edited, and the way back. Edits can be kept for the
 -- next launch: they're stored as text and applied once the game's data has loaded.
 local U = obsidian.module("pages/ui")
+local tuning = obsidian.module("pages/tuning")
 local api, t = U.api, U.t
 local edits, effects, game = api.edits, api.effects, api.game
 
@@ -77,6 +78,18 @@ M.build = function(page)
 	if #active > 0 then
 		page:action(t("changes_effects_off"), function()
 			effects.clear()
+			page:refresh()
+			return t("done")
+		end)
+	end
+
+	page:header(t("tune_header"))
+	local tuned = tuning.active()
+	if #tuned == 0 then page:label(t("changes_none")) end
+	for _, name in ipairs(tuned) do page:label(name) end
+	if #tuned > 0 then
+		page:action(t("tune_reset_all"), function()
+			tuning.clear()
 			page:refresh()
 			return t("done")
 		end)
