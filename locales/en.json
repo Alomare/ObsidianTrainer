@@ -344,7 +344,7 @@
   "tune_capacity": "Magazine or heat capacity",
   "tune_firerate": "Fire rate",
   "tune_header": "One weapon's stats",
-  "tune_page_help": "Changes only your own weapon, not others of its type. It stays through a respawn.",
+  "tune_page_help": "Changes only your own weapon, not others like it. It stays through a respawn.",
   "tune_pierce": "Pierces armor",
   "tune_pierce_help": "Flame weapons ignore this.",
   "tune_power": "Damage",

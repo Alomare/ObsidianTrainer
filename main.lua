@@ -35,9 +35,6 @@ end)
 
 obsidian.keybind("open", function() obsidian.menu.toggle() end)
 
--- The player's progression stays out of reach: with this mod on, a mission adds nothing to the save.
-api.game.hold_progress()
-
 -- A session that stops being cleared switches everything off, and the player should hear why.
 obsidian.on_session(function(on)
 	if on then
