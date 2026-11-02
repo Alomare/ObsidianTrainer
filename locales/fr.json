@@ -1,4 +1,7 @@
 {
+  "account_frozen": "Votre compte est gelé jusqu'à la fermeture du jeu. Rien de ce que vous faites ici n'y est sauvegardé.",
+  "account_counts": "Votre progression compte jusqu'à la fermeture du jeu.",
+  "account_help": "Activez « Geler la progression de mon compte » dans les protections d'Obsidian pour tout essayer sans changer votre compte. Cela s'applique au prochain lancement du jeu.",
   "abort": "Abandonner vers le vaisseau",
   "add_patrol": "Ajouter une patrouille",
   "ammunition": "Munitions",

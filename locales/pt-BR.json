@@ -1,4 +1,7 @@
 {
+  "account_frozen": "Sua conta está congelada até você fechar o jogo. Nada do que você fizer aqui é salvo nela.",
+  "account_counts": "Seu progresso conta até você fechar o jogo.",
+  "account_help": "Ligue Congelar a progressão da minha conta nas Proteções do Obsidian para testar coisas sem mudar sua conta. Vale a partir da próxima vez que você abrir o jogo.",
   "abort": "Abortar para a nave",
   "add_patrol": "Adicionar patrulha",
   "ammunition": "Munição",

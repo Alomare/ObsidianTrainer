@@ -1,4 +1,7 @@
 {
+  "account_frozen": "Your account is frozen for this launch. Nothing you do here is saved to it.",
+  "account_counts": "Your progress counts in this launch.",
+  "account_help": "Turn on Freeze my account's progression in Obsidian's Guardrails to try things without changing your account. It applies from the next launch.",
   "abort": "Abort to the ship",
   "add_patrol": "Add a patrol",
   "ammunition": "Ammunition",

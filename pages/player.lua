@@ -27,6 +27,11 @@ local function outlines()
 end
 
 return function(page)
+	-- Whether this launch counts, from the player's Guardrails in Obsidian (1.0.4 and newer).
+	local guardrails = obsidian.guardrails and obsidian.guardrails()
+	if guardrails then
+		page:label(t(guardrails.freeze_progress and "account_frozen" or "account_counts"), { help = t("account_help") })
+	end
 	page:header(t("survival"))
 	U.effect(page, "god", "god")
 	U.effect(page, "no_status", "no_status")
