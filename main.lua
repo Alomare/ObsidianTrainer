@@ -6,6 +6,7 @@ local weapons = obsidian.module("pages/weapons")
 local stratagems = obsidian.module("pages/stratagems")
 local vehicles = obsidian.module("pages/vehicles")
 local bots = obsidian.module("pages/bots")
+local custom = obsidian.module("pages/custom")
 local spawn = obsidian.module("pages/spawn")
 local enemies = obsidian.module("pages/enemies")
 local mission = obsidian.module("pages/mission")
@@ -46,6 +47,9 @@ obsidian.after_startup(function()
 end)
 
 obsidian.keybind("open", function() obsidian.menu.toggle() end)
+
+-- The custom stratagems made here, made again before the save's loadout is read.
+if api.stratagems.define and not custom.load() then obsidian.on_frame(custom.load) end
 
 -- A session that stops being cleared switches everything off, and the player should hear why.
 obsidian.on_session(function(on)

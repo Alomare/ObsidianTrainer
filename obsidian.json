@@ -27,6 +27,7 @@
     "pages/player.lua",
     "pages/tuning.lua",
     "pages/weapons.lua",
+    "pages/custom.lua",
     "pages/stratagems.lua",
     "pages/vehicles.lua",
     "pages/bots.lua",

@@ -1,5 +1,6 @@
 -- Stratagems: cooldowns, uses, call-in time, and calling one down at will.
 local U = obsidian.module("pages/ui")
+local custom = obsidian.module("pages/custom")
 local api, t = U.api, U.t
 local stratagems, catalog, world = api.stratagems, api.catalog, api.world
 
@@ -26,4 +27,7 @@ return function(page)
 		api.effects.set("any_arrow", true)
 		return t("any_arrow_set", catalog.text(s.name))
 	end))
+
+	-- Custom stratagems came with Obsidian API 1.10.
+	if stratagems.define then custom.rows(page) end
 end
