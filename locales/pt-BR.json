@@ -415,6 +415,8 @@
   "infinite_ammo_help": "As armas atiram sem gastar munição.",
   "infinite_respawns": "Reaparições infinitas (sozinho)",
   "infinite_respawns_help": "Os reforços nunca acabam. O jogo só os conta sem mais ninguém no lobby.",
+  "auto_respawn": "Reaparição automática",
+  "auto_respawn_help": "Um jogador morto volta a cair após 3 segundos, mesmo sem reforços restantes e com outros jogadores no lobby.",
   "infinite_stamina": "Corrida infinita",
   "infinite_stamina_help": "O fôlego fica sempre cheio, então a corrida nunca para.",
   "instant_call_in": "Chamada instantânea",

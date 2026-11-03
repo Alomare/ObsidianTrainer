@@ -415,6 +415,8 @@
   "infinite_ammo_help": "Weapons fire without spending ammunition.",
   "infinite_respawns": "Infinite respawns (alone)",
   "infinite_respawns_help": "Reinforcements never run out. The game counts them only with nobody else in the lobby.",
+  "auto_respawn": "Auto-respawn",
+  "auto_respawn_help": "A dead player drops back in after 3 seconds, even with no reinforcements left and with other players in the lobby.",
   "infinite_stamina": "Infinite sprint",
   "infinite_stamina_help": "Stamina stays full, so sprinting never stops.",
   "instant_call_in": "Instant call-in",

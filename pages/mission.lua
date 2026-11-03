@@ -80,6 +80,8 @@ return function(page)
 
 	page:header(t("reinforcements"))
 	U.effect(page, "infinite_respawns", "infinite_respawns")
+	-- From Obsidian API 1.18.0.
+	if (api.effects.defs or {}).auto_respawn then U.effect(page, "auto_respawn", "auto_respawn") end
 	U.effect(page, "no_game_over", "no_game_over")
 
 	page:header(t("modifiers"))

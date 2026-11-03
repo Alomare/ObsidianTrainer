@@ -415,6 +415,8 @@
   "infinite_ammo_help": "Les armes tirent sans dépenser de munitions.",
   "infinite_respawns": "Réapparitions infinies (solo)",
   "infinite_respawns_help": "Les renforts ne s'épuisent jamais. Le jeu ne les compte que si personne d'autre n'est dans le salon.",
+  "auto_respawn": "Réapparition automatique",
+  "auto_respawn_help": "Un joueur mort est redéployé au bout de 3 secondes, même sans renforts restants et avec d'autres joueurs dans le salon.",
   "infinite_stamina": "Sprint infini",
   "infinite_stamina_help": "L'endurance reste pleine, donc le sprint ne s'arrête jamais.",
   "instant_call_in": "Appel instantané",

@@ -415,6 +415,8 @@
   "infinite_ammo_help": "Las armas disparan sin gastar munición.",
   "infinite_respawns": "Reapariciones infinitas (en solitario)",
   "infinite_respawns_help": "Los refuerzos nunca se acaban. El juego los cuenta solo si no hay nadie más en la sala.",
+  "auto_respawn": "Reaparición automática",
+  "auto_respawn_help": "Un jugador muerto vuelve a caer a los 3 segundos, aunque no queden refuerzos y haya otros jugadores en la sala.",
   "infinite_stamina": "Sprint infinito",
   "infinite_stamina_help": "El aguante se mantiene lleno, así que el sprint nunca se detiene.",
   "instant_call_in": "Llamada instantánea",
