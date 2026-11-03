@@ -111,7 +111,7 @@ return function(page)
 	U.action(page, "clear_decals", world.clear_decals)
 
 	page:header(t("sound"))
-	page:page(t("soundtrack"), soundtrack, { help = U.help("soundtrack") })
+	if api.music then page:page(t("soundtrack"), soundtrack, { help = U.help("soundtrack") }) end
 	U.effect(page, "mute_music", "mute_music")
 	volume(page, "volume_sfx", "sfx_master")
 	volume(page, "volume_voices", "vo_master")

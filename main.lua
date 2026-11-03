@@ -5,6 +5,7 @@ local player = obsidian.module("pages/player")
 local weapons = obsidian.module("pages/weapons")
 local stratagems = obsidian.module("pages/stratagems")
 local vehicles = obsidian.module("pages/vehicles")
+local bots = obsidian.module("pages/bots")
 local spawn = obsidian.module("pages/spawn")
 local enemies = obsidian.module("pages/enemies")
 local mission = obsidian.module("pages/mission")
@@ -19,11 +20,22 @@ local function page(key, build, icon)
 	obsidian.menu.add(function() return t(key) end, build, { icon = icon })
 end
 
+-- An icon the loader has, or another: one it lacks draws nothing.
+local function icon(name, fallback)
+	local ok, list = pcall(obsidian.ui.glyphs)
+	for _, have in ipairs(ok and list or {}) do
+		if have == name then return name end
+	end
+	return fallback
+end
+
 obsidian.after_startup(function()
 	page("page_player", player, "player")
 	page("page_weapons", weapons, "weapons")
 	page("page_stratagems", stratagems, "stratagems")
 	page("page_vehicles", vehicles, "vehicles")
+	-- Bot orders and gear came with Obsidian API 1.10, with api.music.
+	if api.music then page("page_bots", bots, icon("bots", "player")) end
 	page("page_spawn", spawn, "spawn")
 	page("page_enemies", enemies, "enemies")
 	page("page_mission", mission, "mission")

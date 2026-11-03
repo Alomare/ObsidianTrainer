@@ -29,6 +29,7 @@
     "pages/weapons.lua",
     "pages/stratagems.lua",
     "pages/vehicles.lua",
+    "pages/bots.lua",
     "pages/spawn.lua",
     "pages/enemies.lua",
     "pages/mission.lua",
