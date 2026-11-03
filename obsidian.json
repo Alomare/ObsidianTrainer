@@ -1,7 +1,7 @@
 {
   "obsidian": 1,
   "id": "obsidian.trainer",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "name": {
     "en": "Obsidian Trainer",
     "pt-BR": "Obsidian Trainer",
@@ -19,6 +19,7 @@
   "authors": [
     "Obsidian"
   ],
+  "image": "image.jpg",
   "scope": "session",
   "entry": "main.lua",
   "source": "https://github.com/Alomare/ObsidianTrainer",
