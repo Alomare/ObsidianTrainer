@@ -47,6 +47,36 @@ local function volume(page, key, bus)
 	})
 end
 
+local function track_name(track)
+	local key = "track_" .. track
+	local text = t(key)
+	if text ~= key then return text end
+	return track
+end
+
+-- The soundtrack: the tracks this screen has, held until given back to the game.
+local function soundtrack(page)
+	local music = api.music
+	page:label(function()
+		local now = music.now()
+		local what = now.track and track_name(now.track) or t(now.held and "music_silence" or "music_game")
+		return t(now.paused and "music_now_paused" or "music_now", what)
+	end)
+	page:toggle(t("music_pause"), {
+		default = false,
+		get = function() return music.now().paused end,
+		set = function(on) if on then music.pause() else music.resume() end end,
+	})
+	page:action(t("music_stop"), U.act(music.stop), { help = U.help("music_stop") })
+	page:action(t("music_release"), U.act(music.release), { help = U.help("music_release") })
+	page:header(t("music_tracks"))
+	local tracks = music.tracks()
+	if #tracks == 0 then page:label(t("music_none")) end
+	for _, track in ipairs(tracks) do
+		page:action(track_name(track), U.act(music.play, track))
+	end
+end
+
 return function(page)
 	page:header(t("time"))
 	U.effect_number(page, "time_scale", "time_scale", { off = 1, min = 0.1, max = 4, step = 0.1, format = "x%.1f" })
@@ -78,11 +108,14 @@ return function(page)
 	tint(page, "fog_color", "fog_color", FOG)
 	tint(page, "sun_color", "sun_color", SUN)
 	U.effect_number(page, "gravity", "gravity", { off = -18, min = -60, max = -1, step = 1 })
+	U.action(page, "clear_decals", world.clear_decals)
+
+	page:header(t("sound"))
+	page:page(t("soundtrack"), soundtrack, { help = U.help("soundtrack") })
 	U.effect(page, "mute_music", "mute_music")
 	volume(page, "volume_sfx", "sfx_master")
 	volume(page, "volume_voices", "vo_master")
 	volume(page, "volume_music", "music_master")
-	U.action(page, "clear_decals", world.clear_decals)
 
 	page:header(t("blast"))
 	page:number(t("blast_power"), { min = 10, max = 20000, step = 50, default = BLAST_POWER, get = function() return blast.power end, set = function(v) blast.power = v end })
