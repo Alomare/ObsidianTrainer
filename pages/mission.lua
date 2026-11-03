@@ -3,9 +3,25 @@ local U = obsidian.module("pages/ui")
 local api, t = U.api, U.t
 local mission = api.mission
 
-local PRACTICE = { time = 2, environment = 1, enemy = 1, kind = 1, difficulty = 5 }
+-- look 0 and layout 0 are random. Obsidian API before 1.18.0 takes neither.
+local PRACTICE = { time = 2, environment = 1, enemy = 1, kind = 1, difficulty = 5, look = 0, layout = 0 }
 local practice = {}
 for field, value in pairs(PRACTICE) do practice[field] = value end
+
+-- What practice() gets: random parts left out.
+local function practice_choice()
+	local c = {}
+	for field, value in pairs(practice) do c[field] = value end
+	if c.look == 0 then c.look = nil end
+	if c.layout == 0 then c.layout = nil end
+	return c
+end
+
+local function start_practice()
+	local ok, why = mission.practice(practice_choice())
+	if ok then return t("done") end
+	return U.why(why)
+end
 
 local function choices(list)
 	local out = {}
@@ -20,10 +36,18 @@ end
 local function practice_page(page)
 	pick(page, "seed_time", "time", mission.TIMES)
 	pick(page, "seed_environment", "environment", mission.ENVIRONMENTS)
+	if mission.LOOKS then
+		local looks = { { id = 0, label = t("seed_random") } }
+		for i, id in ipairs(mission.LOOKS) do looks[#looks + 1] = { id = i, label = t("seed_" .. id) } end
+		page:choice(t("seed_look"), { choices = looks, default = 0, help = U.help("seed_look"), get = function() return practice.look end, set = function(v) practice.look = v end })
+	end
 	pick(page, "seed_enemy", "enemy", mission.FACTIONS)
 	pick(page, "seed_kind", "kind", mission.TYPES)
 	page:number(t("seed_difficulty"), { min = 1, max = 15, step = 1, default = PRACTICE.difficulty, help = U.help("seed_difficulty"), get = function() return practice.difficulty end, set = function(v) practice.difficulty = v end })
-	page:action(t("practice_start"), U.act(mission.practice, practice), { help = U.help("practice_start") })
+	if mission.LAYOUTS then
+		page:number(t("seed_layout"), { min = 0, max = mission.LAYOUTS, step = 1, default = 0, help = U.help("seed_layout"), get = function() return practice.layout end, set = function(v) practice.layout = v end })
+	end
+	page:action(t("practice_start"), start_practice, { help = U.help("practice_start") })
 end
 
 local function objective_page(page)

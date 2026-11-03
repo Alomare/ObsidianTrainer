@@ -515,7 +515,7 @@
   "players_here_help": "Everyone in the lobby, the host marked, with the ping of each.",
   "practice": "Practice",
   "practice_setup": "Practice mission",
-  "practice_setup_help": "A solo mission with a chosen planet, enemy, type and difficulty, from the ship. Pays no XP or samples, like training.",
+  "practice_setup_help": "A solo mission with a chosen planet, look, enemy, type, difficulty and layout, from the ship. Pays no XP or samples, like training.",
   "practice_start": "Drop",
   "practice_start_help": "Starts the mission with the choices above. Works only from the ship with nobody else in the lobby.",
   "pressure": "Pressure",
@@ -761,5 +761,18 @@
   "why_unknown_wave": "Unknown wave.",
   "why_wrong_environment": "This planet can't show that.",
   "win": "Win now",
-  "win_help": "Ends the mission as a success with no shuttle, and every player counts as extracted."
+  "win_help": "Ends the mission as a success with no shuttle, and every player counts as extracted.",
+  "seed_random": "Random",
+  "seed_look": "Look",
+  "seed_look_help": "One of the planet's three terrain sets, or a faction's world as event planets have it: the bug world on desert, the cyborg world on snow, the illuminate world on forest. City has two terrain sets.",
+  "seed_terrain_1": "Terrain 1",
+  "seed_terrain_2": "Terrain 2",
+  "seed_terrain_3": "Terrain 3",
+  "seed_bug_world": "Bug world",
+  "seed_cyborg_world": "Cyborg world",
+  "seed_illuminate_world": "Illuminate world",
+  "seed_layout": "Layout",
+  "seed_layout_help": "Which of the 215 maps the same choices can make. 0 picks one at random; the same number gives the same map again.",
+  "why_bad_choice": "One of the choices is out of range.",
+  "why_look_not_here": "This look doesn't exist on this planet type."
 }

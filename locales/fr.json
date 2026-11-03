@@ -515,7 +515,7 @@
   "players_here_help": "Tous les membres du salon, l'hôte marqué, avec le ping de chacun.",
   "practice": "Entraînement",
   "practice_setup": "Mission d'entraînement",
-  "practice_setup_help": "Une mission en solo avec planète, ennemi, type et difficulté au choix, depuis le vaisseau. Ne rapporte ni XP ni échantillons, comme l'entraînement.",
+  "practice_setup_help": "Une mission en solo avec planète, aspect, ennemi, type, difficulté et carte au choix, depuis le vaisseau. Ne rapporte ni XP ni échantillons, comme l'entraînement.",
   "practice_start": "Larguer",
   "practice_start_help": "Lance la mission avec les choix ci-dessus. Fonctionne uniquement depuis le vaisseau, sans personne d'autre dans le salon.",
   "pressure": "Pression",
@@ -761,5 +761,18 @@
   "why_unknown_wave": "Vague inconnue.",
   "why_wrong_environment": "Cette planète ne peut pas afficher cela.",
   "win": "Gagner maintenant",
-  "win_help": "Termine la mission en réussite sans navette, et tous les joueurs comptent comme extraits."
+  "win_help": "Termine la mission en réussite sans navette, et tous les joueurs comptent comme extraits.",
+  "seed_random": "Au hasard",
+  "seed_look": "Aspect",
+  "seed_look_help": "L'un des trois terrains de la planète, ou le monde d'une faction tel que l'ont les planètes d'événement : le monde des insectes sur le désert, celui des cyborgs sur la neige, celui des Illuminate sur la forêt. La ville a deux terrains.",
+  "seed_terrain_1": "Terrain 1",
+  "seed_terrain_2": "Terrain 2",
+  "seed_terrain_3": "Terrain 3",
+  "seed_bug_world": "Monde insecte",
+  "seed_cyborg_world": "Monde cyborg",
+  "seed_illuminate_world": "Monde Illuminate",
+  "seed_layout": "Carte",
+  "seed_layout_help": "Laquelle des 215 cartes que les mêmes choix peuvent donner. 0 en tire une au hasard ; le même numéro redonne la même carte.",
+  "why_bad_choice": "L'un des choix est hors limites.",
+  "why_look_not_here": "Cet aspect n'existe pas sur ce type de planète."
 }

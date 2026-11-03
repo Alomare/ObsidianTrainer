@@ -515,7 +515,7 @@
   "players_here_help": "Todos no lobby, com o host marcado, e o ping de cada um.",
   "practice": "Treino",
   "practice_setup": "Missão de treino",
-  "practice_setup_help": "Uma missão solo com planeta, inimigo, tipo e dificuldade à escolha, a partir da nave. Não dá XP nem amostras, como o treino.",
+  "practice_setup_help": "Uma missão solo com planeta, aparência, inimigo, tipo, dificuldade e mapa à escolha, a partir da nave. Não dá XP nem amostras, como o treino.",
   "practice_start": "Descer",
   "practice_start_help": "Inicia a missão com as escolhas acima. Só funciona a partir da nave e sem mais ninguém no lobby.",
   "pressure": "Pressão",
@@ -761,5 +761,18 @@
   "why_unknown_wave": "Onda desconhecida.",
   "why_wrong_environment": "Este planeta não pode mostrar isso.",
   "win": "Vencer agora",
-  "win_help": "Encerra a missão com sucesso sem a nave, e todos os jogadores contam como extraídos."
+  "win_help": "Encerra a missão com sucesso sem a nave, e todos os jogadores contam como extraídos.",
+  "seed_random": "Aleatório",
+  "seed_look": "Aparência",
+  "seed_look_help": "Um dos três terrenos do planeta, ou o mundo de uma facção como os planetas de evento têm: o mundo dos insetos no deserto, o dos ciborgues na neve e o dos Illuminate na floresta. A cidade tem dois terrenos.",
+  "seed_terrain_1": "Terreno 1",
+  "seed_terrain_2": "Terreno 2",
+  "seed_terrain_3": "Terreno 3",
+  "seed_bug_world": "Mundo inseto",
+  "seed_cyborg_world": "Mundo ciborgue",
+  "seed_illuminate_world": "Mundo Illuminate",
+  "seed_layout": "Mapa",
+  "seed_layout_help": "Qual dos 215 mapas que as mesmas escolhas podem gerar. 0 escolhe um ao acaso; o mesmo número dá o mesmo mapa de novo.",
+  "why_bad_choice": "Uma das escolhas está fora do intervalo.",
+  "why_look_not_here": "Essa aparência não existe nesse tipo de planeta."
 }

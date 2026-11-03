@@ -515,7 +515,7 @@
   "players_here_help": "Todos los de la sala, con el host marcado, y el ping de cada uno.",
   "practice": "Práctica",
   "practice_setup": "Misión de práctica",
-  "practice_setup_help": "Una misión en solitario con planeta, enemigo, tipo y dificultad a elegir, desde la nave. No da XP ni muestras, como la práctica.",
+  "practice_setup_help": "Una misión en solitario con planeta, aspecto, enemigo, tipo, dificultad y mapa a elegir, desde la nave. No da XP ni muestras, como la práctica.",
   "practice_start": "Descender",
   "practice_start_help": "Inicia la misión con las opciones de arriba. Solo funciona desde la nave y sin nadie más en la sala.",
   "pressure": "Presión",
@@ -761,5 +761,18 @@
   "why_unknown_wave": "Oleada desconocida.",
   "why_wrong_environment": "Este planeta no puede mostrar eso.",
   "win": "Ganar ahora",
-  "win_help": "Termina la misión con éxito sin nave, y todos los jugadores cuentan como extraídos."
+  "win_help": "Termina la misión con éxito sin nave, y todos los jugadores cuentan como extraídos.",
+  "seed_random": "Al azar",
+  "seed_look": "Aspecto",
+  "seed_look_help": "Uno de los tres terrenos del planeta, o el mundo de una facción como lo tienen los planetas de evento: el mundo de los insectos en desierto, el de los cyborgs en nieve y el de los Illuminate en bosque. La ciudad tiene dos terrenos.",
+  "seed_terrain_1": "Terreno 1",
+  "seed_terrain_2": "Terreno 2",
+  "seed_terrain_3": "Terreno 3",
+  "seed_bug_world": "Mundo insecto",
+  "seed_cyborg_world": "Mundo cyborg",
+  "seed_illuminate_world": "Mundo Illuminate",
+  "seed_layout": "Mapa",
+  "seed_layout_help": "Cuál de los 215 mapas que pueden salir con las mismas opciones. 0 elige uno al azar; el mismo número vuelve a dar el mismo mapa.",
+  "why_bad_choice": "Una de las opciones está fuera de rango.",
+  "why_look_not_here": "Este aspecto no existe en este tipo de planeta."
 }
