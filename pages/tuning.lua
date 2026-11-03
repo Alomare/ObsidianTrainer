@@ -99,7 +99,7 @@ local function slot_page(slot)
 			reset(s)
 			page:refresh()
 			return t("done")
-		end)
+		end, { help = U.help("tune_reset") })
 	end
 end
 

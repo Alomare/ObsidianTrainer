@@ -26,7 +26,7 @@ return function(page)
 		stratagems.select(s.id)
 		api.effects.set("any_arrow", true)
 		return t("any_arrow_set", catalog.text(s.name))
-	end))
+	end), { help = U.help("any_arrow_pick") })
 
 	-- Custom stratagems came with Obsidian API 1.10.
 	if stratagems.define then custom.rows(page) end

@@ -26,14 +26,14 @@ end
 return function(page)
 	page:choice(t("spawn_where"), {
 		choices = { { id = "ahead", label = t("where_ahead") }, { id = "cursor", label = t("where_cursor") } },
-		default = "ahead",
+		default = "ahead", help = U.help("spawn_where"),
 		get = function() return where end,
 		set = function(v) where = v end,
 	})
 	page:header(t("section_supplies"))
-	page:action(t("spawn_ammo"), spawn(AMMO_BOX), { enabled = U.in_mission })
+	page:action(t("spawn_ammo"), spawn(AMMO_BOX), { enabled = U.in_mission, help = U.help("spawn_ammo") })
 	page:page(t("spawn_crates"), rows(catalog.crates), { help = U.help("spawn_crates") })
-	page:page(t("spawn_pickups"), rows(catalog.pickups))
+	page:page(t("spawn_pickups"), rows(catalog.pickups), { help = U.help("spawn_pickups") })
 
 	page:header(t("call_down"))
 	U.call_rows(page)

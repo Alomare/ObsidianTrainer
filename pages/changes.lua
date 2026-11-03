@@ -2,12 +2,19 @@
 -- next launch: they're stored as text and applied once the game's data has loaded.
 local U = obsidian.module("pages/ui")
 local tuning = obsidian.module("pages/tuning")
+local editor = obsidian.module("pages/editor")
 local api, t = U.api, U.t
 local edits, effects, game = api.edits, api.effects, api.game
 
 local M = {}
 
 local PREFIX = "edit."
+
+-- Effects set through their own call, kept under a longer id: the text of the row that sets them.
+local EFFECT_TEXT = {
+	camera_spectate = "spectate", shading_fog_color = "fog_color", shading_sun_color = "sun_color",
+	bus_sfx_master = "volume_sfx", bus_vo_master = "volume_voices", bus_music_master = "volume_music",
+}
 
 -- A unit edit is kept by its settings path; a stratagem or status edit by what the runtime calls it.
 local function encode(e)
@@ -74,13 +81,13 @@ M.build = function(page)
 	page:header(t("changes_on"))
 	local active = effects.active()
 	if #active == 0 then page:label(t("changes_none")) end
-	for _, id in ipairs(active) do page:label(t(id)) end
+	for _, id in ipairs(active) do page:label(t(EFFECT_TEXT[id] or id)) end
 	if #active > 0 then
 		page:action(t("changes_effects_off"), function()
 			effects.clear()
 			page:refresh()
 			return t("done")
-		end)
+		end, { help = U.help("changes_effects_off") })
 	end
 
 	page:header(t("tune_header"))
@@ -92,14 +99,14 @@ M.build = function(page)
 			tuning.clear()
 			page:refresh()
 			return t("done")
-		end)
+		end, { help = U.help("tune_reset_all") })
 	end
 
 	page:header(t("changes_edits"))
 	local list = edits.list()
 	if #list == 0 then page:label(t("changes_none")) end
 	for _, e in ipairs(list) do
-		page:action(string.format("%s: %s = %s", tostring(e.target), e.path, tostring(e.value)), function()
+		page:action(string.format("%s: %s = %s", tostring(e.target), editor.field_label(e.path), tostring(e.value)), function()
 			edits.revert(e.id)
 			page:refresh()
 			return t("done")
@@ -110,7 +117,7 @@ M.build = function(page)
 			edits.revert_all()
 			page:refresh()
 			return t("done")
-		end)
+		end, { help = U.help("changes_edits_off") })
 		page:action(t("changes_keep"), function() return t("changes_kept", M.save()) end, { help = U.help("changes_keep") })
 	end
 end

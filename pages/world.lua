@@ -31,7 +31,7 @@ local function tint(page, key, name, list)
 end
 
 local function spectate(page)
-	page:action(t("spectate_self"), U.act(world.camera.spectate, nil))
+	page:action(t("spectate_self"), U.act(world.camera.spectate, nil), { help = U.help("spectate_self") })
 	for _, p in ipairs(api.game.all_avatars()) do
 		if not p.owned then
 			page:action(tostring(p.record.player_go:get("name")), U.act(world.camera.spectate, p.unit))
@@ -41,7 +41,7 @@ end
 
 local function volume(page, key, bus)
 	page:number(t(key), {
-		min = -60, max = 12, step = 3, format = "%+d dB", default = 0,
+		min = -60, max = 12, step = 3, format = "%+d dB", default = 0, help = U.help(key),
 		get = function() return api.effects.get("bus_" .. bus) or 0 end,
 		set = function(v) api.audio.bus(bus, v ~= 0 and v or false) end,
 	})
@@ -63,7 +63,7 @@ local function soundtrack(page)
 		return t(now.paused and "music_now_paused" or "music_now", what)
 	end)
 	page:toggle(t("music_pause"), {
-		default = false,
+		default = false, help = U.help("music_pause"),
 		get = function() return music.now().paused end,
 		set = function(on) if on then music.pause() else music.resume() end end,
 	})
@@ -118,11 +118,11 @@ return function(page)
 	volume(page, "volume_music", "music_master")
 
 	page:header(t("blast"))
-	page:number(t("blast_power"), { min = 10, max = 20000, step = 50, default = BLAST_POWER, get = function() return blast.power end, set = function(v) blast.power = v end })
-	page:number(t("blast_radius"), { min = 1, max = 30, step = 1, default = BLAST_RADIUS, get = function() return blast.radius end, set = function(v) blast.radius = v end })
+	page:number(t("blast_power"), { min = 10, max = 20000, step = 50, default = BLAST_POWER, help = U.help("blast_power"), get = function() return blast.power end, set = function(v) blast.power = v end })
+	page:number(t("blast_radius"), { min = 1, max = 30, step = 1, default = BLAST_RADIUS, help = U.help("blast_radius"), get = function() return blast.radius end, set = function(v) blast.radius = v end })
 	page:action(t("blast_cursor"), function()
 		local ok, why = world.explode(world.cursor(), blast.power, blast.radius)
 		if ok then return t("done") end
 		return U.why(why)
-	end, { enabled = U.in_mission })
+	end, { enabled = U.in_mission, help = U.help("blast_cursor") })
 end

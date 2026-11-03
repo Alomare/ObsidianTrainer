@@ -14,7 +14,7 @@ local function choices(list)
 end
 
 local function pick(page, key, field, list)
-	page:choice(t(key), { choices = choices(list), default = PRACTICE[field], get = function() return practice[field] end, set = function(v) practice[field] = v end })
+	page:choice(t(key), { choices = choices(list), default = PRACTICE[field], help = U.help(key), get = function() return practice[field] end, set = function(v) practice[field] = v end })
 end
 
 local function practice_page(page)
@@ -22,7 +22,7 @@ local function practice_page(page)
 	pick(page, "seed_environment", "environment", mission.ENVIRONMENTS)
 	pick(page, "seed_enemy", "enemy", mission.FACTIONS)
 	pick(page, "seed_kind", "kind", mission.TYPES)
-	page:number(t("seed_difficulty"), { min = 1, max = 15, step = 1, default = PRACTICE.difficulty, get = function() return practice.difficulty end, set = function(v) practice.difficulty = v end })
+	page:number(t("seed_difficulty"), { min = 1, max = 15, step = 1, default = PRACTICE.difficulty, help = U.help("seed_difficulty"), get = function() return practice.difficulty end, set = function(v) practice.difficulty = v end })
 	page:action(t("practice_start"), U.act(mission.practice, practice), { help = U.help("practice_start") })
 end
 
@@ -52,6 +52,12 @@ local function modifier_choices()
 	return out
 end
 
+-- What the modifier on now does, or what modifiers are with none on.
+local function modifier_help()
+	local on = api.effects.get("mutator")
+	return on and U.help("mutator_" .. tostring(on)) or t("mutator_help")
+end
+
 return function(page)
 	page:label(function()
 		local params, seed = mission.params()
@@ -60,7 +66,7 @@ return function(page)
 	end)
 
 	page:header(t("objectives"))
-	page:page(t("objective_list"), objective_page)
+	page:page(t("objective_list"), objective_page, { help = U.help("objective_list") })
 	U.action(page, "finish_objectives", mission.finish_objectives)
 	U.action(page, "restart_objectives", mission.restart_objectives)
 	U.effect(page, "protect_objectives", "protect_objectives")
@@ -77,10 +83,14 @@ return function(page)
 	U.effect(page, "no_game_over", "no_game_over")
 
 	page:header(t("modifiers"))
-	U.effect_choice(page, "mutator", "mutator", modifier_choices())
+	page:choice(t("mutator"), {
+		choices = modifier_choices(), help = modifier_help, default = false,
+		get = function() return api.effects.get("mutator") end,
+		set = function(v) api.effects.set("mutator", v) end,
+	})
 
 	page:header(t("players_header"))
-	page:page(t("players_here"), players_page)
+	page:page(t("players_here"), players_page, { help = U.help("players_here") })
 
 	page:header(t("samples"))
 	U.action(page, "spawn_samples", mission.spawn_samples)

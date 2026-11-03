@@ -20,11 +20,11 @@ local function spawn_list(faction)
 	return function(page)
 		page:choice(t("spawn_where"), {
 			choices = { { id = "ahead", label = t("where_ahead") }, { id = "cursor", label = t("where_cursor") } },
-			default = "ahead",
+			default = "ahead", help = U.help("spawn_where"),
 			get = function() return where end,
 			set = function(v) where = v end,
 		})
-		page:number(t("spawn_amount"), { min = 1, max = 30, step = 1, default = 1, get = function() return amount end, set = function(v) amount = v end })
+		page:number(t("spawn_amount"), { min = 1, max = 30, step = 1, default = 1, help = U.help("spawn_amount"), get = function() return amount end, set = function(v) amount = v end })
 		for _, enemy in ipairs(catalog.enemies(faction)) do
 			if not enemy.boss and enemies.available(enemy) then
 				page:action(enemy.name, if_room(function()
@@ -80,9 +80,9 @@ return function(page)
 
 	page:header(t("bring"))
 	for _, f in ipairs(FACTIONS) do
-		page:page(t("spawn_faction", t(f.key)), spawn_list(f.id))
+		page:page(t("spawn_faction", t(f.key)), spawn_list(f.id), { help = U.help("spawn_faction") })
 	end
-	page:page(t("spawn_group"), group_list)
+	page:page(t("spawn_group"), group_list, { help = U.help("spawn_group") })
 	page:page(t("spawn_wave"), wave_list, { help = U.help("spawn_wave") })
 	U.action(page, "call_encounter", enemies.call_encounter)
 	U.action(page, "add_patrol", enemies.add_patrol)

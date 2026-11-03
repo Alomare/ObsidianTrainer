@@ -1,4 +1,4 @@
--- Weapons: ammunition, one weapon's stats, and giving weapons, packs and perks.
+-- Weapons: ammunition, individual weapon stats, and giving weapons, packs and perks.
 local U = obsidian.module("pages/ui")
 local tuning = obsidian.module("pages/tuning")
 local api, t = U.api, U.t
@@ -38,9 +38,9 @@ return function(page)
 		get = function() return upgrades end,
 		set = function(v) upgrades = v end,
 	})
-	page:page(t("give_primary"), give("primary_weapon", catalog.primaries))
-	page:page(t("give_sidearm"), give("sidearm_weapon", catalog.sidearms))
-	page:page(t("give_support"), give("support_weapon", catalog.support_weapons))
+	page:page(t("give_primary"), give("primary_weapon", catalog.primaries), { help = U.help("give_primary") })
+	page:page(t("give_sidearm"), give("sidearm_weapon", catalog.sidearms), { help = U.help("give_sidearm") })
+	page:page(t("give_support"), give("support_weapon", catalog.support_weapons), { help = U.help("give_support") })
 	page:page(t("give_backpack"), function(sub)
 		for _, item in ipairs(catalog.backpacks()) do
 			sub:action(catalog.text(item.name), function() return U.result(gear.give_backpack(item.unit_path, upgrade_of(item.unit_path))) end)
@@ -50,11 +50,11 @@ return function(page)
 		for _, perk in ipairs(catalog.perks()) do
 			sub:action(catalog.text(perk.name), U.act(gear.give_perk, perk.name))
 		end
-	end)
+	end, { help = U.help("give_perk") })
 	U.action(page, "remove_perk", gear.remove_perk)
 	page:page(t("grenade_type"), function(sub)
 		for _, g in ipairs(U.GRENADES) do
 			sub:action(t(g.key), U.act(gear.set_grenade, g.id))
 		end
-	end)
+	end, { help = U.help("grenade_type") })
 end

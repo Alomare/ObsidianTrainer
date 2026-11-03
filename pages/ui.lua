@@ -84,11 +84,12 @@ U.GRENADES = {
 	{ id = "equipment/equipment_grenade_smoke", key = "grenade_smoke" },
 }
 
--- A page of every stratagem the player can use. run(stratagem) returns the toast.
+-- A page of every stratagem the player can use, each with the icon from the game's HUD (drawn by
+-- Obsidian 1.2 and newer). run(stratagem) returns the toast.
 function U.stratagem_list(run)
 	return function(page)
 		for _, s in ipairs(api.catalog.stratagems()) do
-			page:action(api.catalog.text(s.name), function() return run(s) end)
+			page:action(api.catalog.text(s.name), function() return run(s) end, { icon = s.icon })
 		end
 	end
 end
@@ -98,7 +99,7 @@ local call_delay = 0
 -- Real flares at the cursor, on the two pages that offer them.
 function U.call_rows(page)
 	local stratagems, world = api.stratagems, api.world
-	page:number(U.t("call_delay"), { min = 0, max = 120, step = 5, default = 0, get = function() return call_delay end, set = function(v) call_delay = v end })
+	page:number(U.t("call_delay"), { min = 0, max = 120, step = 5, default = 0, help = U.help("call_delay"), get = function() return call_delay end, set = function(v) call_delay = v end })
 	page:page(U.t("call_cursor"), U.stratagem_list(function(s) return U.result(stratagems.call(s.name, world.cursor(), call_delay)) end), { help = U.help("call_cursor") })
 	page:action(U.t("reinforce_cursor"), function()
 		return U.result(stratagems.call("stratagem_reinforce", world.cursor(), call_delay))

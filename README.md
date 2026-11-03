@@ -1,8 +1,8 @@
 # Obsidian Trainer
 
-An in-game window for HELLDIVERS (2015) that changes your character, weapons, stratagems, enemies, missions and game data. Use it with the mouse or the keys, and move or resize it.
+An in-game window for HELLDIVERS (2015) that changes the character, weapons, stratagems, enemies, missions and game data. It works with the mouse or the keys, and the window can be moved and resized.
 
-Missions add nothing to your save while it's on, and it only offers the base game and the DLC you own. It stays out of the Galactic War. As a session mod, it follows the same multiplayer rules as any other.
+Missions add nothing to the save while it's on, and it only offers the base game and owned DLC. It stays out of the Galactic War. As a session mod, it follows the same multiplayer rules as any other.
 
 ## How to Use
 

@@ -1,7 +1,7 @@
 {
   "obsidian": 1,
   "id": "obsidian.trainer",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "name": {
     "en": "Obsidian Trainer",
     "pt-BR": "Obsidian Trainer",
@@ -10,7 +10,7 @@
     "es": "Obsidian Trainer"
   },
   "description": {
-    "en": "An in-game menu for changing your character, weapons, stratagems, enemies, missions, the camera and game data. Obsidian API turns on with it.",
+    "en": "An in-game menu for changing the character, weapons, stratagems, enemies, missions, the camera and game data. Obsidian API turns on with it.",
     "pt-BR": "Um menu dentro do jogo para mudar personagem, armas, estratagemas, inimigos, missões, câmera e dados do jogo. O Obsidian API liga junto.",
     "zh-CN": "游戏内菜单，可修改角色、武器、战略配备、敌人、任务、镜头和游戏数据。Obsidian API 会同时启用。",
     "fr": "Un menu en jeu pour changer personnage, armes, stratagèmes, ennemis, missions, caméra et données du jeu. Obsidian API s'active avec lui.",
@@ -69,11 +69,11 @@
         "es": "Conservar ediciones guardadas"
       },
       "description": {
-        "en": "Applies the edits you kept each time the game starts. The multiplayer check can't see them, so play with people who agreed to them.",
-        "pt-BR": "Aplica as edições mantidas a cada início do jogo. A verificação multijogador não as vê, então jogue com quem concordou com elas.",
+        "en": "Applies the kept edits each time the game starts. The multiplayer check can't see them, so they belong in lobbies where everyone agreed to them.",
+        "pt-BR": "Aplica as edições mantidas a cada início do jogo. A verificação multijogador não as vê, então servem para partidas em que todos concordaram com elas.",
         "zh-CN": "每次启动游戏时应用保留的修改。多人检查看不到这些修改，请与同意的玩家一起游戏。",
-        "fr": "Applique les modifications gardées à chaque lancement. La vérification multijoueur ne les voit pas : jouez avec des gens d'accord.",
-        "es": "Aplica las ediciones guardadas en cada inicio. La comprobación multijugador no las ve: juega con quien esté de acuerdo."
+        "fr": "Applique les modifications gardées à chaque lancement. La vérification multijoueur ne les voit pas : elles conviennent aux parties où tout le monde est d'accord.",
+        "es": "Aplica las ediciones guardadas en cada inicio. La comprobación multijugador no las ve: sirven para partidas en las que todos estén de acuerdo."
       }
     }
   ]

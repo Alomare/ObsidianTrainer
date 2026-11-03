@@ -142,8 +142,8 @@ end
 -- The drop has the number of mines, and each mine its own arming delay.
 local function mines_list(page)
 	named_units(by_subtype("mine"))(page)
-	page:page(t("edit_mine"), unit_page("gameobjects/mine_01", t("edit_mine")))
-	page:page(t("edit_mine_stun"), unit_page("gameobjects/mine_stun", t("edit_mine_stun")))
+	page:page(t("edit_mine"), unit_page("gameobjects/mine_01", t("edit_mine")), { help = U.help("edit_mine") })
+	page:page(t("edit_mine_stun"), unit_page("gameobjects/mine_stun", t("edit_mine_stun")), { help = U.help("edit_mine_stun") })
 end
 
 local function enemies_list(page)
@@ -172,7 +172,7 @@ end
 local function stratagems_list(page)
 	for _, s in ipairs(catalog.stratagems()) do
 		local name = catalog.text(s.name)
-		page:page(name, table_fields("stratagem", s, function(field, v) return api.stratagems.edit(s.name, field.path, v) end))
+		page:page(name, table_fields("stratagem", s, function(field, v) return api.stratagems.edit(s.name, field.path, v) end), { icon = s.icon })
 	end
 end
 
@@ -193,20 +193,36 @@ local function character_page(page)
 	end
 end
 
+-- The name a field has on its Editor row, for the Changes page: the first family that lists the path.
+local FAMILIES = { "firearm", "beam", "flame", "arc", "launcher", "explosive", "grenade", "melee", "turret", "mine", "airstrike",
+	"strafing", "artillery", "orbital", "backpack", "vehicle", "toughness", "enemy", "stratagem", "status" }
+
+function M.field_label(path)
+	for _, field in ipairs(CHARACTER_FIELDS) do
+		if field.path == path then return label_of({ family = "character", path = field.path, label = field.label }) end
+	end
+	for _, family in ipairs(FAMILIES) do
+		for _, field in ipairs(catalog.fields(family)) do
+			if field.path == path then return label_of(field) end
+		end
+	end
+	return path
+end
+
 M.build = function(page)
-	page:page(t("edit_primaries"), weapons_list(catalog.primaries))
-	page:page(t("edit_sidearms"), weapons_list(catalog.sidearms))
-	page:page(t("edit_support"), weapons_list(catalog.support_weapons))
-	page:page(t("edit_grenades"), grenades_list)
-	page:page(t("edit_backpacks"), named_units(catalog.backpacks))
-	page:page(t("edit_stratagems"), stratagems_list)
-	page:page(t("edit_sentries"), named_units(by_subtype("turret")))
-	page:page(t("edit_mines"), mines_list)
-	page:page(t("edit_strikes"), named_units(by_subtype("strike")))
-	page:page(t("edit_vehicles"), named_units(catalog.vehicles))
-	page:page(t("edit_enemies"), enemies_list)
-	page:page(t("edit_statuses"), statuses_list)
-	page:page(t("edit_character"), character_page)
+	page:page(t("edit_primaries"), weapons_list(catalog.primaries), { help = U.help("edit_primaries") })
+	page:page(t("edit_sidearms"), weapons_list(catalog.sidearms), { help = U.help("edit_sidearms") })
+	page:page(t("edit_support"), weapons_list(catalog.support_weapons), { help = U.help("edit_support") })
+	page:page(t("edit_grenades"), grenades_list, { help = U.help("edit_grenades") })
+	page:page(t("edit_backpacks"), named_units(catalog.backpacks), { help = U.help("edit_backpacks") })
+	page:page(t("edit_stratagems"), stratagems_list, { help = U.help("edit_stratagems") })
+	page:page(t("edit_sentries"), named_units(by_subtype("turret")), { help = U.help("edit_sentries") })
+	page:page(t("edit_mines"), mines_list, { help = U.help("edit_mines") })
+	page:page(t("edit_strikes"), named_units(by_subtype("strike")), { help = U.help("edit_strikes") })
+	page:page(t("edit_vehicles"), named_units(catalog.vehicles), { help = U.help("edit_vehicles") })
+	page:page(t("edit_enemies"), enemies_list, { help = U.help("edit_enemies") })
+	page:page(t("edit_statuses"), statuses_list, { help = U.help("edit_statuses") })
+	page:page(t("edit_character"), character_page, { help = U.help("edit_character") })
 end
 
 return M

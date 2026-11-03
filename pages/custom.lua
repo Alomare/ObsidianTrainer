@@ -7,27 +7,35 @@ local stratagems, catalog, world = api.stratagems, api.catalog, api.world
 local M = {}
 
 local PREFIX = "custom."
-local ARROWS = { u = "up", d = "down", l = "left", r = "right", up = "up", down = "down", left = "left", right = "right" }
+local WORDS = { up = "up", down = "down", left = "left", right = "right" }
+-- What a player types: W A S D, as the game's own keys. The menu's code row (Obsidian 1.2) sends words.
+local TYPED = { w = "up", a = "left", s = "down", d = "right" }
+-- What the storage keeps: U D L R, from before W A S D.
+local STORED = { u = "up", d = "down", l = "left", r = "right" }
 local BEHAVIOURS = { "none", "explosion", "stun", "heal", "also" }
 
 local draft = { behaviour = "none" }
 
--- "down left up", "d l u" or "dlu".
-local function parse_code(text)
+-- Words ("down left up"), or letters in `letters` ("s a w" or "saw"). nil for anything else, or more
+-- than 10 arrows.
+local function parse(text, letters)
 	local code = {}
 	for word in string.gmatch(string.lower(text or ""), "%a+") do
-		if ARROWS[word] then
-			code[#code + 1] = ARROWS[word]
+		if WORDS[word] then
+			code[#code + 1] = WORDS[word]
 		else
 			for letter in string.gmatch(word, ".") do
-				if not ARROWS[letter] then return nil end
-				code[#code + 1] = ARROWS[letter]
+				if not letters[letter] then return nil end
+				code[#code + 1] = letters[letter]
 			end
 		end
 	end
 	if #code == 0 or #code > 10 then return nil end
 	return code
 end
+
+local function parse_code(text) return parse(text, TYPED) end
+local function parse_stored(text) return parse(text, STORED) end
 
 local SHORT = { up = "U", down = "D", left = "L", right = "R" }
 
@@ -76,7 +84,7 @@ local function decode(text)
 	for field in string.gmatch(text .. "|", "([^|]*)|") do f[#f + 1] = field end
 	if #f < 11 or f[1] == "" or f[2] == "" then return nil end
 	local function opt(s) return s ~= "" and s or nil end
-	return { name = f[1], base = f[2], title = f[3], code = parse_code(f[4]), icon = opt(f[5]), cooldown = tonumber(f[6]), uses = tonumber(f[7]),
+	return { name = f[1], base = f[2], title = f[3], code = parse_stored(f[4]), icon = opt(f[5]), cooldown = tonumber(f[6]), uses = tonumber(f[7]),
 		call_in = tonumber(f[8]), behaviour = opt(f[9]) or "none", also = opt(f[10]), drop_nothing = f[11] == "1" }
 end
 
@@ -131,7 +139,7 @@ local function pick_base(page)
 				draft.cooldown, draft.uses, draft.call_in = s.cooldown_time, s.num_uses, s.activation_time
 				draft.code = draft.code or s.combo
 				return t("custom_base_set", catalog.text(s.name))
-			end)
+			end, { icon = s.icon })
 		end
 	end
 end
@@ -141,7 +149,7 @@ local function pick_icon(page)
 		page:action(catalog.text(s.name), function()
 			draft.icon = s.icon
 			return t("custom_icon_set", catalog.text(s.name))
-		end)
+		end, { icon = s.icon })
 	end
 end
 
@@ -150,7 +158,7 @@ local function pick_also(page)
 		page:action(catalog.text(s.name), function()
 			draft.behaviour, draft.also = "also", s.name
 			return t("custom_also_set", catalog.text(s.name))
-		end)
+		end, { icon = s.icon })
 	end
 end
 
@@ -158,24 +166,24 @@ local function workshop(page)
 	page:label(function() return t("custom_base_now", base_name()) end)
 	page:page(t("custom_base"), pick_base, { help = U.help("custom_base") })
 	page:input(t("custom_title"), function(text)
-		if text == "" or #text > 40 then return U.why("bad_type") end
+		if text == "" or #text > 40 then return t("custom_title_bad") end
 		draft.title = text
 		return t("custom_title_set", text)
-	end)
+	end, { help = U.help("custom_title") })
 	page:input(t("custom_code"), function(text)
 		local code = parse_code(text)
 		if not code then return t("custom_code_bad") end
 		draft.code = code
 		return t("custom_code_set", code_text(code))
-	end, { help = U.help("custom_code") })
+	end, { help = U.help("custom_code"), code = true })
 	page:label(function() return t("custom_code_now", draft.code and code_text(draft.code) or "-") end)
 	page:page(t("custom_icon"), pick_icon, { help = U.help("custom_icon") })
-	page:number(t("custom_cooldown"), { min = 0, max = 600, step = 5, default = 0, get = function() return draft.cooldown or 0 end, set = function(v) draft.cooldown = v end })
+	page:number(t("custom_cooldown"), { min = 0, max = 600, step = 5, default = 0, help = U.help("custom_cooldown"), get = function() return draft.cooldown or 0 end, set = function(v) draft.cooldown = v end })
 	page:number(t("custom_uses"), { min = 0, max = 20, step = 1, default = 0, help = U.help("custom_uses"), get = function() return draft.uses or 0 end, set = function(v) draft.uses = v end })
-	page:number(t("custom_call_in"), { min = 0.5, max = 30, step = 0.5, default = 3, format = "%.1f s", get = function() return draft.call_in or 3 end, set = function(v) draft.call_in = v end })
+	page:number(t("custom_call_in"), { min = 0.5, max = 30, step = 0.5, default = 3, format = "%.1f s", help = U.help("custom_call_in"), get = function() return draft.call_in or 3 end, set = function(v) draft.call_in = v end })
 	local choices = {}
 	for i, kind in ipairs(BEHAVIOURS) do choices[i] = { id = kind, label = t("custom_does_" .. kind) } end
-	page:choice(t("custom_does"), { choices = choices, default = "none", get = function() return draft.behaviour end, set = function(v) draft.behaviour = v end })
+	page:choice(t("custom_does"), { choices = choices, default = "none", help = U.help("custom_does"), get = function() return draft.behaviour end, set = function(v) draft.behaviour = v end })
 	page:page(t("custom_also"), pick_also, { help = U.help("custom_also") })
 	page:toggle(t("custom_drop_nothing"), { default = false, help = U.help("custom_drop_nothing"), get = function() return draft.drop_nothing == true end, set = function(on) draft.drop_nothing = on end })
 	page:action(t("custom_make"), function()
@@ -199,8 +207,8 @@ local function one(d)
 	return function(page)
 		page:label(t("custom_from", catalog.text(d.base)))
 		page:label(t("custom_code_now", code_text(d.code or (catalog.stratagem(d.name) or {}).combo)))
-		page:action(t("give_stratagem"), U.act(stratagems.give, d.name))
-		page:action(t("custom_call"), function() return U.result(stratagems.call(d.name, world.cursor(), 0)) end, { enabled = U.in_mission })
+		page:action(t("give_stratagem"), U.act(stratagems.give, d.name), { help = U.help("give_stratagem") })
+		page:action(t("custom_call"), function() return U.result(stratagems.call(d.name, world.cursor(), 0)) end, { enabled = U.in_mission, help = U.help("custom_call") })
 		page:action(t("custom_forget"), function()
 			obsidian.storage.set(PREFIX .. d.name, nil)
 			return t("custom_forgotten")
@@ -212,7 +220,7 @@ function M.rows(page)
 	page:header(t("custom"))
 	page:page(t("custom_workshop"), workshop, { help = U.help("custom_workshop") })
 	for _, d in ipairs(stored()) do
-		if made[d.name] then page:page(d.title, one(d)) end
+		if made[d.name] then page:page(d.title, one(d), { icon = d.icon or (catalog.stratagem(d.base) or {}).icon }) end
 	end
 end
 
