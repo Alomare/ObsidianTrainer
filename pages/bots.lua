@@ -62,6 +62,51 @@ local function list_page(items, run, icons)
 	end
 end
 
+-- Entering a code takes a moment, so how it ended comes as a toast of its own, named after the bot.
+local function enter(b, name)
+	if not b.use_stratagem then return false, "not_available" end
+	local pos = world.cursor()
+	if not pos then return false, "no_position" end
+	return b:use_stratagem(name, pos, function(ok, why)
+		if not ok then (api.menu or obsidian).toast(t("bot_enter_failed", b.name, U.why(why))) end
+	end)
+end
+
+local function entered(ok, why)
+	if ok then return t("bot_entering") end
+	return result(ok, why)
+end
+
+-- The stratagems the bot carries, read when the page opens.
+local function enter_page(b)
+	return function(sub)
+		local held = b:stratagems()
+		if #held == 0 then sub:label(t(b:alive() and "bot_enter_none" or "bot_no_body")) end
+		for _, h in ipairs(held) do
+			local s = catalog.stratagem(h.name)
+			sub:action(catalog.text(h.name), function() return entered(enter(b, h.name)) end, { icon = s and s.icon or nil })
+		end
+	end
+end
+
+-- Every bot that carries the stratagem enters it.
+local function enter_all(s)
+	local list = bots.all()
+	if #list == 0 then return t("bots_none") end
+	local started, first_why = 0, nil
+	for _, b in ipairs(list) do
+		local ok, why = enter(b, s.name)
+		if ok then
+			started = started + 1
+		elseif why ~= "not_held" then
+			first_why = first_why or why
+		end
+	end
+	if started > 0 then return t("bot_entering") end
+	if first_why then return result(false, first_why) end
+	return t("bots_none_carry")
+end
+
 local function gear(page, b)
 	page:page(t("give_primary"), list_page(catalog.primaries, function(w) return b:give_weapon("primary_weapon", w.unit_path) end), { help = U.help("give_primary") })
 	page:page(t("give_sidearm"), list_page(catalog.sidearms, function(w) return b:give_weapon("sidearm_weapon", w.unit_path) end), { help = U.help("give_sidearm") })
@@ -93,6 +138,10 @@ local function one(b)
 		page:action(t("bot_throw"), to_one(b, function() b:throw() end), { help = U.help("bot_throw") })
 		page:action(t("bot_switch"), to_one(b, function() b:switch() end), { help = U.help("bot_switch") })
 		page:action(t("bot_reload"), to_one(b, function() b:reload() end), { help = U.help("bot_reload") })
+		page:page(t("bot_enter"), enter_page(b), { help = U.help("bot_enter") })
+		page:action(t("bot_enter_stop"), to_one(b, function()
+			if not (b.cancel_stratagem and b:cancel_stratagem()) then return false, "not_entering" end
+		end), { help = U.help("bot_enter_stop") })
 		page:page(t("bot_call"), list_page(catalog.stratagems, function(s) return b:call(s.name, world.cursor()) end, true), { help = U.help("bot_call") })
 
 		page:header(t("bot_gear"))
@@ -114,6 +163,7 @@ return function(page)
 	orders(page, to_all)
 	page:action(t("bot_fight_all"), to_all(function(b) b:fight(25) end), { enabled = ready, help = U.help("bot_fight_all") })
 	page:action(t("bot_calm_all"), to_all(function(b) b:fight(false) end), { enabled = ready, help = U.help("bot_calm_all") })
+	page:page(t("bot_enter_all"), U.stratagem_list(enter_all), { enabled = ready, help = U.help("bot_enter_all") })
 	page:action(t("bot_remove_all"), function()
 		bots.remove_all()
 		page:refresh()
