@@ -16,9 +16,19 @@ local console = obsidian.module("pages/console")
 local changes = obsidian.module("pages/changes")
 local tuning = obsidian.module("pages/tuning")
 
+-- The window is Obsidian API's from 1.15.0, opened with the API's key. An older API has none, and the pages go
+-- to the loader's own window.
+local menu = api.menu or obsidian.menu
+
+-- A short message beside the window.
+local function toast(text, seconds)
+	if api.menu then return api.menu.toast(text, seconds) end
+	return obsidian.toast(text, seconds)
+end
+
 -- The title is a function: at boot the game's language isn't known yet.
 local function page(key, build, icon)
-	obsidian.menu.add(function() return t(key) end, build, { icon = icon })
+	menu.add(function() return t(key) end, build, { icon = icon })
 end
 
 -- An icon the loader has, or another: one it lacks draws nothing.
@@ -46,18 +56,16 @@ obsidian.after_startup(function()
 	page("page_changes", changes.build, "changes")
 end)
 
-obsidian.keybind("open", function() obsidian.menu.toggle() end)
-
 -- The custom stratagems made here, made again before the save's loadout is read.
 if api.stratagems.define and not custom.load() then obsidian.on_frame(custom.load) end
 
 -- A session that stops being cleared switches everything off, and the player should hear why.
 obsidian.on_session(function(on)
 	if on then
-		obsidian.toast(t("session_on"))
+		toast(t("session_on"))
 	else
 		tuning.clear()
-		obsidian.toast(t("session_off"), 8)
+		toast(t("session_off"), 8)
 	end
 end)
 

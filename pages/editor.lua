@@ -33,7 +33,7 @@ local function step_of(field)
 end
 
 local function note(result_ok, why)
-	if not result_ok then obsidian.toast(U.why(why)) end
+	if not result_ok then (api.menu or obsidian).toast(U.why(why)) end
 end
 
 -- The text key of a field, when it has one. Older rows keep the English in the data, with its note.

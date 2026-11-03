@@ -10,7 +10,7 @@ Obsidian Trainer comes with [Obsidian](https://github.com/Alomare/ObsidianModMan
 
 1. Switch on Obsidian Trainer in the Mods tab. [Obsidian API](https://github.com/Alomare/ObsidianAPI), the mod it's built on, turns on with it.
 2. Deploy, then start the game.
-3. Press F6 to open the window. The Keys tab of the mod changes the key.
+3. Press F6 to open the window. The Trainer's pages are in the **Obsidian Trainer** folder. The key belongs to Obsidian API, and the Keys tab of Obsidian API changes it.
 
 The Obsidian Trainer page in the Wiki lists every key and page.
 

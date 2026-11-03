@@ -1,7 +1,7 @@
 {
   "obsidian": 1,
   "id": "obsidian.trainer",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "name": {
     "en": "Obsidian Trainer",
     "pt-BR": "Obsidian Trainer",
@@ -41,19 +41,6 @@
   ],
   "requires": [
     "obsidian.api"
-  ],
-  "keybinds": [
-    {
-      "id": "open",
-      "default": "f6",
-      "label": {
-        "en": "Open the menu",
-        "pt-BR": "Abrir o menu",
-        "zh-CN": "打开菜单",
-        "fr": "Ouvrir le menu",
-        "es": "Abrir el menú"
-      }
-    }
   ],
   "options": [
     {
