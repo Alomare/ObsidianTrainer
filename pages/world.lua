@@ -83,11 +83,18 @@ return function(page)
 	U.effect(page, "pause", "pause")
 
 	page:header(t("camera"))
-	U.effect_number(page, "camera_distance", "camera_distance", { off = 17, min = 5, max = 60, step = 1 })
-	U.effect_number(page, "camera_angle", "camera_angle", { off = 65, min = 20, max = 90, step = 5 })
+	-- The default of each is what the game set on this screen (a mission and the ship differ), from
+	-- Obsidian API 1.25.0; an older one gives a mission's.
+	local game_camera = world.camera.defaults and world.camera.defaults() or {}
+	local function own(field, fallback)
+		local v = game_camera[field]
+		return type(v) == "number" and math.floor(v + 0.5) or fallback
+	end
+	U.effect_number(page, "camera_distance", "camera_distance", { off = own("distance", 17), min = 5, max = 60, step = 1 })
+	U.effect_number(page, "camera_angle", "camera_angle", { off = own("angle", 65), min = 20, max = 90, step = 5 })
 	U.effect(page, "free_camera_bounds", "free_camera_bounds")
 	U.effect(page, "no_camera_shake", "no_camera_shake")
-	U.effect_number(page, "camera_fov", "camera_fov", { off = 60, min = 20, max = 120, step = 5 })
+	U.effect_number(page, "camera_fov", "camera_fov", { off = own("fov", 60), min = 20, max = 120, step = 5 })
 	U.effect_number(page, "camera_spin", "camera_spin", { off = -45, min = -180, max = 180, step = 15 })
 	page:page(t("spectate"), spectate, { help = U.help("spectate") })
 	U.effect(page, "photo_mode", "photo_mode")
