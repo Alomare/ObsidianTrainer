@@ -2,6 +2,10 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.9.1
+
+- Changed: a new image beside the mod in Obsidian's mod list.
+
 ## 1.9.0
 
 - New: Enter a stratagem on each bot's page: the bot holds the stratagem key, enters the code of a stratagem it carries and throws the flare at the cursor. Stop entering ends it.
