@@ -2,6 +2,11 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.11.0 (unreleased)
+
+- New: on the **Bots** page, **Help up the nearest**, **Heal the most hurt** and **Heal me** for every bot or one, and **Help each other** and **Stop helping each other** for every bot. Healing uses the REP-80 in the bot's slots. Needs Obsidian API 1.33.0.
+- New: each bot's page has **Get up when downed** (on by default), **Help others up**, **Heal others** and **Stop helping**.
+
 ## 1.10.0
 
 - Changed: **Practice mission** is now **Custom mission**, which drops into a real mission. XP, samples and unlocks count. Before, it started a training mission that paid no XP. The campaign stays as it was: no planet progress, and no Galactic War or leaderboard report.

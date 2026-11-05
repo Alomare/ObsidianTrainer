@@ -51,6 +51,43 @@ local function orders(page, run)
 	end), { enabled = ready, help = U.help("bot_go_cursor") })
 	page:action(t("bot_come"), run(function(b) return b:teleport(world.ahead(2)) end), { enabled = ready, help = U.help("bot_come") })
 	page:action(t("bot_heal"), run(function(b) return b:heal() end), { enabled = ready, help = U.help("bot_heal") })
+	page:action(t("bot_revive"), run(function(b)
+		if not b.revive then return false, "not_available" end
+		return b:revive()
+	end), { enabled = ready, help = U.help("bot_revive") })
+	page:action(t("bot_heal_target"), run(function(b)
+		if not b.heal_target then return false, "not_available" end
+		return b:heal_target()
+	end), { enabled = ready, help = U.help("bot_heal_target") })
+	page:action(t("bot_heal_me"), run(function(b)
+		if not b.heal_target then return false, "not_available" end
+		local me = api.game.my_unit()
+		if not me then return false, "no_avatar" end
+		return b:heal_target(me)
+	end), { enabled = ready, help = U.help("bot_heal_me") })
+end
+
+-- Helping each other on their own: getting up, helping up and healing with the REP-80.
+local function help_toggles(page, b)
+	if not b.auto_revive then return end
+	page:toggle(t("bot_get_up_own"), {
+		default = true, help = U.help("bot_get_up_own"),
+		get = function() return b.get_up ~= false end,
+		set = function(on) b:auto_get_up(on) end,
+	})
+	page:toggle(t("bot_revive_own"), {
+		default = false, help = U.help("bot_revive_own"),
+		get = function() return (b:auto_helping()) ~= false end,
+		set = function(on) b:auto_revive(on and 15 or false) end,
+	})
+	page:toggle(t("bot_heal_own"), {
+		default = false, help = U.help("bot_heal_own"),
+		get = function() return select(2, b:auto_helping()) ~= false end,
+		set = function(on) b:auto_heal(on and 20 or false) end,
+	})
+	page:action(t("bot_help_stop"), to_one(b, function()
+		if not b:stop_helping() then return false, "not_helping" end
+	end), { help = U.help("bot_help_stop") })
 end
 
 -- icons: true for a list of stratagems, whose HUD icons are square; others have none here.
@@ -128,6 +165,7 @@ local function one(b)
 			get = function() return b:fighting() ~= false end,
 			set = function(on) b:fight(on and 25 or false) end,
 		})
+		help_toggles(page, b)
 		page:action(t("bot_aim_cursor"), to_one(b, function()
 			local pos = world.cursor()
 			if not pos then return false, "no_position" end
@@ -163,6 +201,14 @@ return function(page)
 	orders(page, to_all)
 	page:action(t("bot_fight_all"), to_all(function(b) b:fight(25) end), { enabled = ready, help = U.help("bot_fight_all") })
 	page:action(t("bot_calm_all"), to_all(function(b) b:fight(false) end), { enabled = ready, help = U.help("bot_calm_all") })
+	page:action(t("bot_help_all"), to_all(function(b)
+		if not b.auto_revive then return false, "not_available" end
+		b:auto_revive(15):auto_heal(20)
+	end), { enabled = ready, help = U.help("bot_help_all") })
+	page:action(t("bot_help_none"), to_all(function(b)
+		if not b.auto_revive then return false, "not_available" end
+		b:auto_revive(false):auto_heal(false)
+	end), { enabled = ready, help = U.help("bot_help_none") })
 	page:page(t("bot_enter_all"), U.stratagem_list(enter_all), { enabled = ready, help = U.help("bot_enter_all") })
 	page:action(t("bot_remove_all"), function()
 		bots.remove_all()
