@@ -1,4 +1,4 @@
--- Mission: objectives, extraction, waits, samples, modifiers, and a practice drop from the ship.
+-- Mission: objectives, extraction, waits, samples, modifiers, and a custom mission from the ship.
 local U = obsidian.module("pages/ui")
 local api, t = U.api, U.t
 local mission = api.mission
@@ -17,8 +17,9 @@ local function practice_choice()
 	return c
 end
 
+-- A real mission that leaves the campaign alone. Obsidian API before 1.30.0 has only the training one.
 local function start_practice()
-	local ok, why = mission.practice(practice_choice())
+	local ok, why = (mission.drop or mission.practice)(practice_choice())
 	if ok then return t("done") end
 	return U.why(why)
 end

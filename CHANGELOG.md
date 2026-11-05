@@ -2,6 +2,10 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.10.0
+
+- Changed: **Practice mission** is now **Custom mission**, which drops into a real mission. XP, samples and unlocks count. Before, it started a training mission that paid no XP. The campaign stays as it was: no planet progress, and no Galactic War or leaderboard report.
+
 ## 1.9.2
 
 - Changed: **Field of view**, **Camera distance** and **Camera angle** reset to the game's own values for the current screen, on the ship as in missions. They reset to a mission's values before, which left the ship's camera wrong.
