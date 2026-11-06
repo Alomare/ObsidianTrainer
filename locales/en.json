@@ -817,6 +817,7 @@
   "why_no_one_downed": "Nobody nearby is downed.",
   "why_no_one_hurt": "Nobody nearby is hurt.",
   "why_already_helped": "Another bot is already on the way.",
+  "why_no_grenades": "The bot has no grenades left.",
   "why_no_heal_tool": "The bot carries no REP-80.",
   "why_not_downed": "That Helldiver isn't downed.",
   "why_not_hurt": "That Helldiver isn't hurt.",

@@ -817,6 +817,7 @@
   "why_no_one_downed": "Personne n'est à terre à proximité.",
   "why_no_one_hurt": "Personne n'est blessé à proximité.",
   "why_already_helped": "Un autre bot est déjà en route.",
+  "why_no_grenades": "The bot has no grenades left.",
   "why_no_heal_tool": "Le bot ne porte pas de REP-80.",
   "why_not_downed": "Ce Helldiver n'est pas à terre.",
   "why_not_hurt": "Ce Helldiver n'est pas blessé.",
