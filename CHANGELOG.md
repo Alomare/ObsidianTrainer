@@ -2,6 +2,10 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## Next
+
+- Changed: on the **Bots** page, **Help up the nearest** and **Heal the most hurt** say when another bot is already on the way to everyone who needs it. Needs the next Obsidian API.
+
 ## 1.11.0
 
 - New: on the **Bots** page, **Help up the nearest**, **Heal the most hurt** and **Heal me** for every bot or one, and **Help each other** and **Stop helping each other** for every bot. Healing uses the REP-80 in the bot's slots. Needs Obsidian API 1.33.0.

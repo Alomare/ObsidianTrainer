@@ -816,6 +816,7 @@
   "bot_help_none_help": "Os bots param de ajudar os outros por conta própria.",
   "why_no_one_downed": "Ninguém por perto está caído.",
   "why_no_one_hurt": "Ninguém por perto está ferido.",
+  "why_already_helped": "Outro bot já está a caminho.",
   "why_no_heal_tool": "O bot não carrega um REP-80.",
   "why_not_downed": "Esse Helldiver não está caído.",
   "why_not_hurt": "Esse Helldiver não está ferido.",
