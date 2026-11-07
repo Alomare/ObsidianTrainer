@@ -2,7 +2,7 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
-## Next
+## 1.12.1
 
 - Changed: with **Each weapon for what it can hurt**, the bot fires the support weapon until the target dies or the weapon is spent, and looks again a second later: a launcher with several rockets, such as the Commando, fires them all.
 - Changed: an order given on the **Bots** page stops a support weapon shot the bot started by itself, and holds those back for 8 seconds. A shot that came to nothing waits 5 seconds before the next.
