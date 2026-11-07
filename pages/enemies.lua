@@ -39,6 +39,47 @@ local function spawn_list(faction)
 	end
 end
 
+-- A toast for each enemy that starts aiming before a shot (the Hunter's beam, the Cyborg IFV's laser
+-- sight), with how long until it fires: what bots that get out of shots react to.
+local watching = false
+local told = setmetatable({}, { __mode = "k" })
+local look = 0
+
+local function toast(text)
+	local m = api.menu or obsidian
+	return m.toast(text)
+end
+
+obsidian.on_frame(function()
+	if not (watching and enemies.charging) then return end
+	look = look - (rawget(_G, "ENGINE_DT") or 0.016)
+	if look > 0 then return end
+	look = 0.1
+	for _, e in ipairs(enemies.near(60)) do
+		local c = enemies.charging(e)
+		if c and not told[e] then
+			local info = enemies.info(e) or {}
+			toast(t("enemy_charging", info.name or "?", string.format("%.1f", c.time)))
+		end
+		told[e] = c and true or nil
+	end
+end)
+
+-- What the player's weapons do to the enemy nearest the cursor, after armor.
+local function armor_at_cursor()
+	local pos = api.world.cursor()
+	if not pos then return U.why("no_position") end
+	local e, d = enemies.nearest(pos)
+	if not e or (d or 0) > 8 then return U.why("no_target") end
+	local info = enemies.info(e) or {}
+	local lines = { t("enemy_armor", info.name or "?", info.armor_min or 0, info.armor_max or 0) }
+	for _, w in ipairs(api.gear.weapons_of()) do
+		local s, g, weak = api.gear.hurts(w.unit, e)
+		if s then lines[#lines + 1] = t("hurts_line", t("slot_" .. w.slot:gsub("_weapon$", "")), math.floor(s), math.floor(g), math.floor(weak)) end
+	end
+	return table.concat(lines, "\n")
+end
+
 local function group_list(page)
 	for _, key in ipairs(catalog.enemy_groups()) do
 		page:action(catalog.text(key), if_room(U.act(enemies.spawn_group, key)), { enabled = U.host_only })
@@ -66,6 +107,14 @@ return function(page)
 	U.effect(page, "host_owns_enemies", "host_owns_enemies")
 	U.action(page, "stun_near", enemies.stun_near, 20)
 	U.effect_number(page, "damage_to_enemies", "damage_to_enemies", { off = 1, min = 0, max = 10, step = 0.25, format = "x%.2f" })
+	if enemies.charging then
+		page:toggle(t("watch_charging"), {
+			default = false, help = U.help("watch_charging"),
+			get = function() return watching end,
+			set = function(on) watching = on end,
+		})
+	end
+	if api.gear.hurts then page:action(t("enemy_armor_cursor"), armor_at_cursor, { help = U.help("enemy_armor_cursor") }) end
 
 	page:header(t("pressure"))
 	U.effect_number(page, "max_enemies", "enemy_cap", { off = 16, min = 1, max = enemies.MAX_CAP, step = 1, enabled = U.host_only })
