@@ -17,11 +17,21 @@ local function added(page, bot, why)
 	return t("bot_added", bot.name)
 end
 
+-- Reasons whose shared text was written for something else (a stratagem code, the player's own
+-- vehicle, a name): a bot's own words for them.
+local BOT_WHY = { busy = "why_bot_busy", seated = "why_bot_seated", taken = "why_seat_taken", refused = "why_bot_refused",
+	no_target = "why_nothing_here" }
+
+local function bot_why(why)
+	if why == "no_avatar" then return t("bot_no_body") end
+	if BOT_WHY[why] then return t(BOT_WHY[why]) end
+	return U.why(why)
+end
+
 -- The toast for what a bot answered: a bot without a body isn't the player off the field.
 local function result(ok, why)
 	if ok ~= false then return t("done") end
-	if why == "no_avatar" then return t("bot_no_body") end
-	return U.why(why)
+	return bot_why(why)
 end
 
 -- The same order to every bot. fn(bot) may answer false and a reason; the first one is the toast.
@@ -152,7 +162,7 @@ end
 
 local function told(b, done_key)
 	return function(ok, why)
-		local text = (ok and done_key) and t(done_key) or U.why(why)
+		local text = (ok and done_key) and t(done_key) or bot_why(why)
 		toast(t("bot_enter_failed", b.name, text))
 	end
 end
@@ -162,7 +172,7 @@ local function enemy_at_cursor()
 	local pos = world.cursor()
 	if not pos then return nil, "no_position" end
 	local e, d = api.enemies.nearest(pos)
-	if not e or (d or 0) > 8 then return nil, "no_target" end
+	if not e or (d or 0) > 8 then return nil, "no_enemy_here" end
 	return e
 end
 
@@ -170,7 +180,7 @@ local function vehicle_at_cursor()
 	local pos = world.cursor()
 	if not pos then return nil, "no_position" end
 	local v = api.vehicles.nearest(pos, 6)
-	if not v then return nil, "no_vehicle" end
+	if not v then return nil, "no_vehicle_here" end
 	return v
 end
 
@@ -288,7 +298,7 @@ local function weapon_rows(page, b)
 	if b.hurts then
 		page:action(t("bot_hurts"), function()
 			local e, why = enemy_at_cursor()
-			if not e then return U.why(why) end
+			if not e then return bot_why(why) end
 			local rows = {}
 			for _, slot in ipairs({ "primary", "sidearm", "support" }) do
 				local s, g, w = b:hurts(e, slot)
@@ -346,7 +356,7 @@ local function thing_rows(page, b)
 		local pos = world.cursor()
 		if not pos then return false, "no_position" end
 		local thing = bots.usables(pos, 5)[1]
-		if not thing then return false, "no_target" end
+		if not thing then return false, "nothing_here" end
 		return b:use(thing.unit, told(b, "bot_used"))
 	end), { help = U.help("bot_use_cursor") })
 	page:action(t("bot_use_near"), to_one(b, function()
@@ -354,7 +364,7 @@ local function thing_rows(page, b)
 		local pos = b:position()
 		if not pos then return false, "no_avatar" end
 		local thing = bots.usables(pos, 15)[1]
-		if not thing then return false, "no_target" end
+		if not thing then return false, "nothing_here" end
 		return b:use(thing.unit, told(b, "bot_used"))
 	end), { help = U.help("bot_use_near") })
 	page:action(t("bot_cancel_use"), to_one(b, function()

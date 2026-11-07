@@ -909,5 +909,12 @@
   "why_picked_other": "Something else is in the way.",
   "why_no_effect": "Nothing happened.",
   "why_dead": "They died.",
-  "why_no_help_up": "The presses didn't help them up."
+  "why_no_help_up": "The presses didn't help them up.",
+  "why_bot_busy": "The bot is busy: calling a stratagem, throwing or firing a weapon.",
+  "why_bot_seated": "The bot is in a vehicle seat.",
+  "why_seat_taken": "Someone else took that seat.",
+  "why_bot_refused": "The game didn't let the bot do it.",
+  "why_nothing_here": "Nothing to use near there.",
+  "why_no_enemy_here": "No enemy near the cursor.",
+  "why_no_vehicle_here": "No vehicle near the cursor."
 }

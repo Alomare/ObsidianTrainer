@@ -70,7 +70,7 @@ local function armor_at_cursor()
 	local pos = api.world.cursor()
 	if not pos then return U.why("no_position") end
 	local e, d = enemies.nearest(pos)
-	if not e or (d or 0) > 8 then return U.why("no_target") end
+	if not e or (d or 0) > 8 then return U.why("no_enemy_here") end
 	local info = enemies.info(e) or {}
 	local lines = { t("enemy_armor", info.name or "?", info.armor_min or 0, info.armor_max or 0) }
 	for _, w in ipairs(api.gear.weapons_of()) do

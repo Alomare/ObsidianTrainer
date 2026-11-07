@@ -2,14 +2,15 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
-## Next
+## 1.12.0
 
-- Changed: on the **Bots** page, **Fight** is a choice for each bot: **Off**, **Nearest enemy**, **Each weapon for what it can hurt** (the primary for what it gets through the armor of, the support weapon for the rest), **In a vehicle: both weapons**, and **In a mech: gun, then rockets**.
+- Changed: on the **Bots** page, **Fight** is a choice for each bot: **Off**, **Nearest enemy**, **Each weapon for what it can hurt** (the primary for what it gets through the armor of, the support weapon for the rest), **In a vehicle: both weapons**, and **In a mech: gun, then rockets**. All of this release's rows show in full with Obsidian API 1.38.0.
 - New: each bot's page has **Weapons** (take out a weapon, the support weapon at the enemy at the cursor, the damage each weapon does to that enemy, refill the backpack), **Vehicles** (get in, take the driver's seat, get out, ride along, a mech that spares Helldivers) and **Using things** (the thing at the cursor or the nearest one, put it down, voice lines, a jump pack jump to the cursor).
 - New: **Get out of enemy shots** for each bot and for every bot: the bot walks out of a Hunter's, a Cyborg IFV's or a Hulk's aim before the shot.
 - New: on the **Bots** page, **Fight with each weapon for what it can hurt** and **Mechs spare Helldivers** for every bot.
 - New: on the **Enemies** page, **Tell me when an enemy aims** and **Armor of the enemy**, with what each of your weapons does to it.
-- Changed: on the **Bots** page, **Help up the nearest** and **Heal the most hurt** say when another bot is already on the way to everyone who needs it. Needs the next Obsidian API.
+- Changed: a bot that can't follow an order says why in words about the bot: busy, in a seat, a seat someone else took.
+- Changed: on the **Bots** page, **Help up the nearest** and **Heal the most hurt** say when another bot is already on the way to everyone who needs it. Needs Obsidian API 1.34.0.
 
 ## 1.11.0
 
