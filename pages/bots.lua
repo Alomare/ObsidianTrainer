@@ -44,7 +44,8 @@ end
 -- can't be read: so every text is looked up now, while the order is given.
 local ENDINGS = { "gone", "not_offered", "picked_other", "no_effect", "downed", "timeout", "cancelled", "no_avatar", "taken",
 	"destroyed", "no_vehicle", "refused", "no_switch", "no_ammo", "no_weapon", "seated", "dead", "no_help_up", "interrupted",
-	"jammed", "wrong_code", "busy", "no_target" }
+	"jammed", "wrong_code", "busy", "no_target", "failed", "needs_carry", "not_usable", "dropped", "not_delivered", "no_drop_off",
+	"left", "not_owned" }
 
 -- on_done for a bot's order: a toast named after the bot, only when it failed unless done_key is given.
 local function told(b, done_key)
@@ -324,6 +325,13 @@ local function weapon_rows(page, b)
 		if not e then return false, why end
 		return b:use_weapon("support", e, told(b, "bot_fired"))
 	end), { help = U.help("bot_use_support") })
+	if b.resting then
+		page:action(t("bot_use_support_move"), to_one(b, function()
+			local e, why = enemy_at_cursor()
+			if not e then return false, why end
+			return b:use_weapon("support", e, { move = true, rest = 10 }, told(b, "bot_fired"))
+		end), { help = U.help("bot_use_support_move") })
+	end
 	page:action(t("bot_cancel_weapon"), to_one(b, function()
 		if not b:cancel_weapon() then return false, "not_available" end
 	end), { help = U.help("bot_cancel_weapon") })
@@ -399,6 +407,15 @@ local function thing_rows(page, b)
 		if not thing then return false, "nothing_here" end
 		return b:use(thing.unit, told(b, "bot_used"))
 	end), { help = U.help("bot_use_near") })
+	if b.operate then
+		page:action(t("bot_use_force"), to_one(b, function()
+			local pos = world.cursor()
+			if not pos then return false, "no_position" end
+			local thing = bots.usables(pos, 5)[1]
+			if not thing then return false, "nothing_here" end
+			return b:use(thing.unit, { force = true }, told(b, "bot_used"))
+		end), { help = U.help("bot_use_force") })
+	end
 	page:action(t("bot_cancel_use"), to_one(b, function()
 		if not b:cancel_use() then return false, "not_available" end
 	end), { help = U.help("bot_cancel_use") })
@@ -417,7 +434,57 @@ local function thing_rows(page, b)
 	end), { help = U.help("bot_jump") })
 end
 
+-- Terminals, carried things, reinforcing, the shuttle, team ammo and satchels. Needs Obsidian API with operate.
+local TERMINALS = { "objective_interact_object", "extract_beacon", "hidden_sweep_object" }
+
+local function objective_rows(page, b)
+	if not b.operate then return end
+	page:header(t("bot_objectives"))
+	page:action(t("bot_operate"), to_one(b, function()
+		local pos = world.cursor()
+		if not pos then return false, "no_position" end
+		local thing = bots.usables(pos, 8, TERMINALS)[1]
+		if not thing then return false, "nothing_here" end
+		return b:operate(thing.unit, told(b, "bot_operated"))
+	end), { help = U.help("bot_operate") })
+	page:action(t("bot_cancel_operate"), to_one(b, function()
+		if not b:cancel_operate() then return false, "not_available" end
+	end), { help = U.help("bot_cancel_operate") })
+	page:action(t("bot_deliver"), to_one(b, function()
+		local pos = b:position()
+		if not pos then return false, "no_avatar" end
+		local thing = bots.usables(pos, 40, { "objective_carry_object" })[1]
+		if not thing then return false, "nothing_here" end
+		return b:deliver(thing.unit, nil, told(b, "bot_delivered"))
+	end), { help = U.help("bot_deliver") })
+	page:action(t("bot_reinforce"), to_one(b, function()
+		local pos = world.cursor()
+		if not pos then return false, "no_position" end
+		return b:reinforce(pos, told(b, "bot_reinforced"))
+	end), { help = U.help("bot_reinforce") })
+	page:action(t("bot_board"), to_one(b, function() return b:board(told(b, "bot_aboard")) end), { help = U.help("bot_board") })
+	page:action(t("bot_load"), to_one(b, function()
+		local me = api.game.my_unit()
+		if not me then return false, "no_avatar" end
+		return b:load(me, told(b, "bot_loaded"))
+	end), { help = U.help("bot_load") })
+	page:action(t("bot_take_ammo_mine"), to_one(b, function()
+		local me = api.game.my_unit()
+		if not me then return false, "no_avatar" end
+		return b:take_ammo(me, told(b, "bot_took_ammo"))
+	end), { help = U.help("bot_take_ammo_mine") })
+	page:action(t("bot_take_ammo_own"), to_one(b, function() return b:take_ammo(nil, told(b, "bot_took_ammo")) end), { help = U.help("bot_take_ammo_own") })
+	page:action(t("bot_detonate"), to_one(b, function() return b:detonate() end), { help = U.help("bot_detonate") })
+end
+
 local function danger_rows(page, b)
+	if b.camera then
+		page:toggle(t("bot_in_camera"), {
+			default = true, help = U.help("bot_in_camera"),
+			get = function() return b:in_camera() end,
+			set = function(on) b:camera(on) end,
+		})
+	end
 	if not b.avoid_shots then return end
 	page:toggle(t("bot_avoid"), {
 		default = false, help = U.help("bot_avoid"),
@@ -467,6 +534,7 @@ local function one(b)
 		weapon_rows(page, b)
 		vehicle_rows(page, b)
 		thing_rows(page, b)
+		objective_rows(page, b)
 
 		page:header(t("bot_gear"))
 		gear(page, b)

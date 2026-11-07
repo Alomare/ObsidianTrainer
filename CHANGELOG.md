@@ -2,6 +2,14 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## Next
+
+- New: each bot's page has **Objectives**: work the terminal at the cursor (codes and presses to the end), stop working it, deliver the nearest thing to carry, reinforce at the cursor, board the shuttle, load my launcher, take ammo from my backpack or from the bot's own, and set off satchel charges.
+- New: **In the camera** for each bot. Off, the camera no longer frames the bot and it can walk anywhere on the map.
+- New: **Support weapon at the cursor, on the move** for each bot: the bot keeps walking while it fires, then puts the weapon away for 10 seconds.
+- New: **Use the thing at the cursor, forced** for each bot.
+- These rows show with the next Obsidian API.
+
 ## 1.12.1
 
 - Changed: with **Each weapon for what it can hurt**, the bot fires the support weapon until the target dies or the weapon is spent, and looks again a second later: a launcher with several rockets, such as the Commando, fires them all.
