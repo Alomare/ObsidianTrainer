@@ -34,12 +34,51 @@ local function result(ok, why)
 	return bot_why(why)
 end
 
+-- A short message beside the window.
+local function toast(text)
+	local m = api.menu or obsidian
+	return m.toast(text)
+end
+
+-- How a longer order can end. The answer comes later, from inside the API, where this mod's texts
+-- can't be read: so every text is looked up now, while the order is given.
+local ENDINGS = { "gone", "not_offered", "picked_other", "no_effect", "downed", "timeout", "cancelled", "no_avatar", "taken",
+	"destroyed", "no_vehicle", "refused", "no_switch", "no_ammo", "no_weapon", "seated", "dead", "no_help_up", "interrupted",
+	"jammed", "wrong_code", "busy", "no_target" }
+
+-- on_done for a bot's order: a toast named after the bot, only when it failed unless done_key is given.
+local function told(b, done_key)
+	local done = done_key and t("bot_enter_failed", b.name, t(done_key))
+	local failed = {}
+	for _, why in ipairs(ENDINGS) do failed[why] = t("bot_enter_failed", b.name, bot_why(why)) end
+	return function(ok, why)
+		if ok then
+			if done then toast(done) end
+			return
+		end
+		toast(failed[why] or (b.name .. ": " .. tostring(why)))
+	end
+end
+
+-- Bots firing the support weapon by themselves at what the primary can't hurt: bot -> seconds to wait.
+local heavy_wait = setmetatable({}, { __mode = "k" })
+-- An order given here comes first: a support weapon shot the bot started by itself stops, and it
+-- starts none for 8 seconds. Without that, an enemy the rifle can't hurt keeps the bot busy for good.
+local ORDER_PAUSE = 8
+
+local function yield(b)
+	if heavy_wait[b] == nil then return end
+	if b.cancel_weapon then b:cancel_weapon() end
+	heavy_wait[b] = math.max(heavy_wait[b], ORDER_PAUSE)
+end
+
 -- The same order to every bot. fn(bot) may answer false and a reason; the first one is the toast.
 local function to_all(fn)
 	return function()
 		local list = bots.all()
 		if #list == 0 then return t("bots_none") end
 		for _, b in ipairs(list) do
+			yield(b)
 			local ok, why = fn(b)
 			if ok == false then return result(ok, why) end
 		end
@@ -48,7 +87,10 @@ local function to_all(fn)
 end
 
 local function to_one(bot, fn)
-	return function() return result(fn(bot)) end
+	return function()
+		yield(bot)
+		return result(fn(bot))
+	end
 end
 
 local function orders(page, run)
@@ -114,9 +156,7 @@ local function enter(b, name)
 	if not b.use_stratagem then return false, "not_available" end
 	local pos = world.cursor()
 	if not pos then return false, "no_position" end
-	return b:use_stratagem(name, pos, function(ok, why)
-		if not ok then (api.menu or obsidian).toast(t("bot_enter_failed", b.name, U.why(why))) end
-	end)
+	return b:use_stratagem(name, pos, told(b))
 end
 
 local function entered(ok, why)
@@ -154,19 +194,6 @@ local function enter_all(s)
 	return t("bots_none_carry")
 end
 
--- How a longer order ended, as a toast named after the bot: what it did, or why it stopped.
-local function toast(text)
-	local m = api.menu or obsidian
-	return m.toast(text)
-end
-
-local function told(b, done_key)
-	return function(ok, why)
-		local text = (ok and done_key) and t(done_key) or bot_why(why)
-		toast(t("bot_enter_failed", b.name, text))
-	end
-end
-
 -- The enemy nearest the cursor, within 8 meters of it.
 local function enemy_at_cursor()
 	local pos = world.cursor()
@@ -187,11 +214,9 @@ end
 -- What fight is set to, as the Trainer set it: off, the nearest enemy, each weapon for what it can hurt,
 -- a seat's both weapons, or a mech's gun for what it can hurt and rockets for the rest.
 local fight_mode = setmetatable({}, { __mode = "k" })
--- Bots firing the support weapon by themselves at what the primary can't hurt: bot -> seconds to wait.
-local heavy_wait = setmetatable({}, { __mode = "k" })
 -- The toggles set here, by bot: riding along, a mech that spares Helldivers, getting out of shots.
 local riding, sparing, avoiding = setmetatable({}, { __mode = "k" }), setmetatable({}, { __mode = "k" }), setmetatable({}, { __mode = "k" })
-local HEAVY_LOOK, HEAVY_AFTER = 1, 5
+local HEAVY_LOOK, HEAVY_FAILED = 1, 5
 
 local function hurt(b, e, slot)
 	return (b:hurts(e, slot)) or 0
@@ -241,7 +266,14 @@ obsidian.on_frame(function()
 		elseif b:alive() and not b:using_weapon() then
 			heavy_wait[b] = HEAVY_LOOK
 			local heavy = b:enemies_in_sight(30, function(e) return hurt(b, e, "primary") == 0 and hurt(b, e, "support") > 0 end)[1]
-			if heavy and b:use_weapon("support", heavy, told(b, "bot_fired")) then heavy_wait[b] = HEAVY_AFTER end
+			-- Fires until the target dies, the weapon is spent or out of ammunition: a launcher with more than
+			-- one shot (the Commando) keeps firing, and the next look comes a second after.
+			-- A shot that came to nothing (no clear line, no ammunition) waits longer before the next look.
+			if heavy then
+				b:use_weapon("support", heavy, { shots = math.huge }, function(ok)
+					if not ok and heavy_wait[b] then heavy_wait[b] = math.max(heavy_wait[b], HEAVY_FAILED) end
+				end)
+			end
 		else
 			heavy_wait[b] = HEAVY_LOOK
 		end

@@ -2,6 +2,12 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## Next
+
+- Changed: with **Each weapon for what it can hurt**, the bot fires the support weapon until the target dies or the weapon is spent, and looks again a second later: a launcher with several rockets, such as the Commando, fires them all.
+- Changed: an order given on the **Bots** page stops a support weapon shot the bot started by itself, and holds those back for 8 seconds. A shot that came to nothing waits 5 seconds before the next.
+- Fixed: messages on how a bot's order ended showed "bot_enter_failed" in place of the text.
+
 ## 1.12.0
 
 - Changed: on the **Bots** page, **Fight** is a choice for each bot: **Off**, **Nearest enemy**, **Each weapon for what it can hurt** (the primary for what it gets through the armor of, the support weapon for the rest), **In a vehicle: both weapons**, and **In a mech: gun, then rockets**. All of this release's rows show in full with Obsidian API 1.38.0.
