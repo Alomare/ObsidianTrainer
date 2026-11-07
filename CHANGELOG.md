@@ -2,7 +2,7 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
-## Next
+## 1.13.0
 
 - New: each bot's page has **Objectives**: work the terminal at the cursor (codes and presses to the end), stop working it, deliver the nearest thing to carry, reinforce at the cursor, board the shuttle, load my launcher, take ammo from my backpack or from the bot's own, and set off satchel charges.
 - New: **In the camera** for each bot. Off, the camera no longer frames the bot and it can walk anywhere on the map.
