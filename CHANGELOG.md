@@ -6,6 +6,7 @@ New, changed or removed options, one line each, brief and direct. A release's se
 
 - New: Move speed while aiming and Move speed while reloading on the Player page, which let weapons that hold the player in place be walked with.
 - Fixed: on a loader without `obsidian.save_data` the Mission page rows stay open, as before saves came in.
+- Fixed: with the Third Person Camera mod, the rows that act at the cursor take the point under the crosshair. Needs Obsidian API 1.48.0.
 
 ## 1.14.0
 
