@@ -2,6 +2,13 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.15.0
+
+- New: Move speed while aiming and Move speed while reloading on the Player page, which let weapons that hold the player in place be walked with.
+- Fixed: on a loader without `obsidian.save_data` the Mission page rows stay open, as before saves came in.
+- Fixed: with the Third Person Camera mod, the rows that act at the cursor take the point under the crosshair. Needs Obsidian API 1.48.0.
+- Changed: the Mission page rows that award progression (spawn and collect samples) need a Sandbox save. On an Official save they stay locked and point to the Saves tab.
+
 ## 1.13.0
 
 - New: each bot's page has **Objectives**: work the terminal at the cursor (codes and presses to the end), stop working it, deliver the nearest thing to carry, reinforce at the cursor, board the shuttle, load my launcher, take ammo from my backpack or from the bot's own, and set off satchel charges.
