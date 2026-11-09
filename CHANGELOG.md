@@ -2,6 +2,11 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.15.0
+
+- New: Move speed while aiming and Move speed while reloading on the Player page, which let weapons that hold the player in place be walked with.
+- Fixed: on a loader without `obsidian.save_data` the Mission page rows stay open, as before saves came in.
+
 ## 1.14.0
 
 - Changed: the Mission page rows that award progression (spawn and collect samples) need a Sandbox save. On an Official save they stay locked and point to the Saves tab.
