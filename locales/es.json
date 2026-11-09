@@ -554,6 +554,7 @@
   "revive_everyone_help": "Todos los jugadores caídos de la misión se levantan. Funciona como host o como cliente.",
   "revive_help": "Levanta a un jugador caído. Un jugador muerto necesita Reaparecer ahora.",
   "samples": "Muestras y mapa",
+  "progression_locked": "Locked on Official saves. Choose a Sandbox in the Saves tab of Obsidian to use this.",
   "screen": "Pantalla",
   "section_supplies": "Suministros",
   "seed_boss": "Jefe",

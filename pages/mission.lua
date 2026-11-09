@@ -120,8 +120,9 @@ return function(page)
 	page:page(t("players_here"), players_page, { help = U.help("players_here") })
 
 	page:header(t("samples"))
-	U.action(page, "spawn_samples", mission.spawn_samples)
-	U.action(page, "collect_samples", mission.collect_samples)
+	if not U.progression_open() then page:label(t("progression_locked")) end
+	U.progression_action(page, "spawn_samples", mission.spawn_samples)
+	U.progression_action(page, "collect_samples", mission.collect_samples)
 	U.action(page, "reveal_map", mission.reveal_map)
 
 	page:header(t("practice"))

@@ -37,6 +37,17 @@ function U.action(page, key, fn, ...)
 	return page:action(U.t(key), U.act(fn, ...), { help = U.help(key) })
 end
 
+-- What the Sandbox rule allows: progression changes are for Sandbox saves, never an Official one.
+function U.progression_open()
+	return obsidian.save_data ~= nil and obsidian.save_data.sandbox() ~= nil
+end
+
+-- A row that changes a save's progression: greyed out on an Official save.
+function U.progression_action(page, key, fn, ...)
+	local open = U.progression_open()
+	return page:action(U.t(key), U.act(fn, ...), { help = U.help(key), enabled = function() return open, U.t("progression_locked") end })
+end
+
 -- The help text of a key, when it has one.
 function U.help(key)
 	local help = obsidian.text(key .. "_help")

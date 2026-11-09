@@ -554,6 +554,7 @@
   "revive_everyone_help": "Tous les joueurs à terre de la mission se relèvent. Fonctionne en hôte ou en client.",
   "revive_help": "Relève un joueur à terre. Un joueur mort a besoin de Réapparaître maintenant.",
   "samples": "Échantillons et carte",
+  "progression_locked": "Locked on Official saves. Choose a Sandbox in the Saves tab of Obsidian to use this.",
   "screen": "Écran",
   "section_supplies": "Ravitaillement",
   "seed_boss": "Boss",

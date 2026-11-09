@@ -554,6 +554,7 @@
   "revive_everyone_help": "Every downed player in the mission gets back up. Works as host or client.",
   "revive_help": "Brings a downed player back up. A dead player needs Respawn now instead.",
   "samples": "Samples and map",
+  "progression_locked": "Locked on Official saves. Choose a Sandbox in the Saves tab of Obsidian to use this.",
   "screen": "Screen",
   "section_supplies": "Supplies",
   "seed_boss": "Boss",
