@@ -10,11 +10,11 @@
     "es": "Obsidian Trainer"
   },
   "description": {
-    "en": "An in-game menu for changing the character, weapons, stratagems, enemies, missions, the camera and game data. Obsidian API turns on with it.",
-    "pt-BR": "Um menu dentro do jogo para mudar personagem, armas, estratagemas, inimigos, missões, câmera e dados do jogo. O Obsidian API liga junto.",
-    "zh-CN": "游戏内菜单，可修改角色、武器、战略配备、敌人、任务、镜头和游戏数据。Obsidian API 会同时启用。",
-    "fr": "Un menu en jeu pour changer personnage, armes, stratagèmes, ennemis, missions, caméra et données du jeu. Obsidian API s'active avec lui.",
-    "es": "Un menú en el juego para cambiar personaje, armas, estratagemas, enemigos, misiones, cámara y datos del juego. Obsidian API se activa con él."
+    "en": "An in-game menu that changes the character, gear, enemies and missions.",
+    "pt-BR": "Um menu no jogo que muda personagem, equipamento, inimigos e missões.",
+    "zh-CN": "游戏内菜单，可修改角色、装备、敌人和任务。",
+    "fr": "Un menu en jeu qui change personnage, équipement, ennemis et missions.",
+    "es": "Un menú en el juego que cambia personaje, equipo, enemigos y misiones."
   },
   "authors": [
     "Obsidian"
