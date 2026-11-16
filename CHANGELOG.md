@@ -2,6 +2,11 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## Next
+
+- New: the menu in Russian, and in Simplified Chinese from the translation by Lapeace233.
+- Changed: item, weapon and enemy names show as the game writes them in every language, Cyrillic and Chinese included. Needs the next Obsidian API.
+
 ## 1.15.0
 
 - New: Move speed while aiming and Move speed while reloading on the Player page, which let weapons that hold the player in place be walked with.

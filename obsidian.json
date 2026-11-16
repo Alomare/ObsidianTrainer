@@ -7,14 +7,16 @@
     "pt-BR": "Obsidian Trainer",
     "zh-CN": "Obsidian 修改器",
     "fr": "Obsidian Trainer",
-    "es": "Obsidian Trainer"
+    "es": "Obsidian Trainer",
+    "ru": "Obsidian Trainer"
   },
   "description": {
     "en": "An in-game menu that changes the character, gear, enemies and missions.",
     "pt-BR": "Um menu no jogo que muda personagem, equipamento, inimigos e missões.",
     "zh-CN": "游戏内菜单，可修改角色、装备、敌人和任务。",
     "fr": "Un menu en jeu qui change personnage, équipement, ennemis et missions.",
-    "es": "Un menú en el juego que cambia personaje, equipo, enemigos y misiones."
+    "es": "Un menú en el juego que cambia personaje, equipo, enemigos y misiones.",
+    "ru": "Внутриигровое меню, которое меняет персонажа, снаряжение, врагов и миссии."
   },
   "authors": [
     "Obsidian"
@@ -54,14 +56,16 @@
         "pt-BR": "Manter edições salvas",
         "zh-CN": "保留已保存的修改",
         "fr": "Garder les modifications enregistrées",
-        "es": "Conservar ediciones guardadas"
+        "es": "Conservar ediciones guardadas",
+        "ru": "Хранить сохранённые правки"
       },
       "description": {
         "en": "Applies the kept edits each time the game starts. The multiplayer check can't see them, so they belong in lobbies where everyone agreed to them.",
         "pt-BR": "Aplica as edições mantidas a cada início do jogo. A verificação multijogador não as vê, então servem para partidas em que todos concordaram com elas.",
         "zh-CN": "每次启动游戏时应用保留的修改。多人检查看不到这些修改，请与同意的玩家一起游戏。",
         "fr": "Applique les modifications gardées à chaque lancement. La vérification multijoueur ne les voit pas : elles conviennent aux parties où tout le monde est d'accord.",
-        "es": "Aplica las ediciones guardadas en cada inicio. La comprobación multijugador no las ve: sirven para partidas en las que todos estén de acuerdo."
+        "es": "Aplica las ediciones guardadas en cada inicio. La comprobación multijugador no las ve: sirven para partidas en las que todos estén de acuerdo.",
+        "ru": "Применяет сохранённые правки при каждом запуске игры. Сетевая проверка их не видит, поэтому они годятся для лобби, где все с ними согласны."
       }
     }
   ]
