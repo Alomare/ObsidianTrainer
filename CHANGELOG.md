@@ -2,7 +2,7 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
-## Next
+## 1.16.0
 
 - New: the menu in Russian, and in Simplified Chinese from the translation by Lapeace233.
 - Changed: item, weapon and enemy names show as the game writes them in every language, Cyrillic and Chinese included. Needs the next Obsidian API.
