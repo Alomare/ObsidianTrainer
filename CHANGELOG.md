@@ -2,6 +2,10 @@
 
 New, changed or removed options, one line each, brief and direct. A release's section becomes its release notes.
 
+## 1.16.1
+
+- New: texts in every language for the new answers of Obsidian API 1.52.0 (no such unit, too far away, already aboard).
+
 ## 1.16.0
 
 - New: the menu in Russian, and in Simplified Chinese from the translation by Lapeace233.
